@@ -13,13 +13,33 @@ const geocode = asyncHandler(async (req, res, next) => {
         limit: 1,
       })
       .send();
-    const data = {};
-    data.geometry = response.body.features[0].geometry;
-    data.placename = req.body.post.location;
-    req.body.post.location = data;
-    next();
-  } else {
-    next();
+    if (response.body.features.length) {
+      const data = {};
+      data.geometry = response.body.features[0].geometry;
+      data.placename = req.body.post.location;
+      req.body.post.location = data;
+      next();
+    } else {
+      const redirectInfo = {
+        path: `${
+          req.method === "POST" ? "posts/new" : `${req.params.id}/edit`
+        }`,
+        data: (() => {
+          // I used an immediately invoked function expression because just to omit using the parentheses when accessing "data".
+          if (req.method === "POST") {
+            // Return the post data only for POST requests.
+            return req.body.post;
+          }
+          return null;
+        })(),
+      };
+      next({
+        status: 422,
+        message:
+          "The location you entered does not exists, please choose another one or don't use the location field!",
+        redirectInfo,
+      });
+    }
   }
 });
 

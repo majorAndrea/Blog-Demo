@@ -23,7 +23,7 @@ const checkErrors = async (
       status: status,
       message: errMsg,
       redirectInfo: { path, data },
-    }); // Populate redirectInfo so user will be redirect back with eventually forms populated with values using "data".
+    }); // Populate redirectInfo so user will be redirect back with forms populated with values using "data".
   }
 };
 

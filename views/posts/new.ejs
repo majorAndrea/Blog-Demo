@@ -1,60 +1,65 @@
 <% layout("/layouts/boilerplate.ejs") %>
-<div class="row">
-    <h1 class="text-center">Add New Post</h1>
-    <div class="card col-md-8 offset-md-2 col-lg-6 offset-lg-3 shadow bg-light shadow border rounded-3">
-        <form action="/posts?_csrf=<%= csrfToken %>" method="POST" class="p-3 p-md-5 validation" novalidate enctype="multipart/form-data">
-            <section class="mb-3">
-                <label for="title" class="form-label">Title:</label>
-                <input type="text" class="form-control" id="title"
-                    placeholder="Title for the Blog Post" name="post[title]" value="<%= tempData && tempData.title ? tempData.title : null %>" required>
-                <div class="valid-feedback">
-                    OK!
-                </div>
-                <div class="invalid-feedback">
-                    Please write a title.
-                </div>
-            </section>
-            <section class="mb-3">
-                <label for="image" class="form-label">Post Image:</label>
-                <input type="file" class="form-control" id="image" name="post[image]" required>
-                <div class="valid-feedback">
-                    OK!
-                </div>
-                <div class="invalid-feedback">
-                    Image required!
-                </div>
-            </section>
-            <section class="mb-3">
-                <label for="text" class="form-label">Text:</label>
-                <textarea class="form-control" id="text" rows="9" name="post[text]" placeholder="Write the text of the post here." required><%= tempData && tempData.text ? tempData.text : null %></textarea>
-                <div class="valid-feedback">
-                    OK!
-                </div>
-                <div class="invalid-feedback">
-                    Please write a text for the post.
-                </div>
-            </section>
-            <section>
-                <p class="form-label">Categories:</p>
-                <% for (category of postCategories) { %> 
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" value="<%= category %>" id="<%= category %>" name="post[categories]" <%= tempData && tempData.categories && tempData.categories.includes(category) ? "checked" : null %> >
-                        <label class="form-check-label" for="<%= category %>">
-                            <%= category.replace(category[0], category[0].toUpperCase()); %> 
-                        </label>
+    <div class="row">
+        <h1 class="text-center">Add New Post</h1>
+        <div class="card col-md-8 offset-md-2 col-lg-6 offset-lg-3 shadow bg-light shadow border rounded-3">
+            <form action="/posts?_csrf=<%= csrfToken %>" method="POST" class="p-3 p-md-5 validation" novalidate
+                enctype="multipart/form-data" autocomplete="off">
+                <section class="mb-3">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" class="form-control" id="title" placeholder="Title for the Blog Post"
+                        name="post[title]" value="<%= tempData && tempData.title ? tempData.title : null %>" required>
+                    <div class="valid-feedback">
+                        OK!
                     </div>
-                <% } %> 
-            </section>
-            <section class="location-field mt-3 d-none">
-                <label for="title" class="form-label">Location:</label>
-                <input type="text" class="form-control" id="title"
-                    placeholder="Location name" name="post[location]" disabled>
-            </section>
-            <section class="text-end">
-                <button type="submit" class="btn btn-lg btn-success mt-3">Submit Post</button>
-            </section>
-        </form>
+                    <div class="invalid-feedback">
+                        Please write a title.
+                    </div>
+                </section>
+                <section class="mb-3">
+                    <label for="image" class="form-label">Post Image:</label>
+                    <input type="file" class="form-control" id="image" name="post[image]" required>
+                    <div class="valid-feedback">
+                        OK!
+                    </div>
+                    <div class="invalid-feedback">
+                        Image required!
+                    </div>
+                </section>
+                <section class="mb-3">
+                    <label for="text" class="form-label">Text:</label>
+                    <textarea class="form-control" id="text" rows="9" name="post[text]"
+                        placeholder="Write the text of the post here."
+                        required><%= tempData && tempData.text ? tempData.text : null %></textarea>
+                    <div class="valid-feedback">
+                        OK!
+                    </div>
+                    <div class="invalid-feedback">
+                        Please write a text for the post.
+                    </div>
+                </section>
+                <section>
+                    <p class="form-label">Categories:</p>
+                    <% for (category of postCategories) { %>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" value="<%= category %>" id="<%= category %>"
+                                name="post[categories]" <%=tempData && tempData.categories &&
+                                tempData.categories.includes(category) ? "checked" : null %> >
+                            <label class="form-check-label" for="<%= category %>">
+                                <%= category.replace(category[0], category[0].toUpperCase()); %>
+                            </label>
+                        </div>
+                        <% } %>
+                </section>
+                <section class="location-field mt-3">
+                    <label for="title" class="form-label">Location:</label>
+                    <input type="text" class="form-control" id="title" placeholder="Location name" name="post[location]"
+                        value="<%= tempData && tempData.location ? tempData.location : null  %>">
+                </section>
+                <section class="text-end">
+                    <button type="submit" class="btn btn-lg btn-success mt-3">Submit Post</button>
+                </section>
+            </form>
+        </div>
     </div>
-</div>
 
-<% tempData && delete tempData %> 
+    <% tempData && delete tempData %>

@@ -10,11 +10,17 @@ class AppError extends Error {
     this.redirectInfo = redirectInfo;
   }
   redirect(req, res) {
-    const { path = "/", data = undefined, redirectMsg = "Click here to proceed" } = this.redirectInfo;
+    const {
+      path = "/",
+      data = undefined,
+      redirectMsg = "Click here to proceed",
+    } = this.redirectInfo;
     if (data) {
       req.session.tempData = data;
     }
-    res.status(this.status).render("error.ejs", { err: this, path, redirectMsg });
+    res
+      .status(this.status)
+      .render("error.ejs", { err: this, path, redirectMsg });
   }
 }
 

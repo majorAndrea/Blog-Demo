@@ -58,6 +58,8 @@ const postSchema = new Schema(
 );
 
 // Get the post image with some specified width.
+// This will use the transformation API of cloudinary so,
+// is a bit expensive if used extensively.
 postSchema.methods.resizeImage = function (width, height = null) {
   const imgPath = this.image.path;
   width = width.toString();

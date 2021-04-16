@@ -1,8 +1,8 @@
 <% layout("./layouts/boilerplate.ejs") %>
     <!-- BIG SLIDESHOW -->
     <div class="d-flex justify-content-between">
-        <section id="carouselExampleCaptions" class="carousel slide border border-1 border-light p-1 rounded shadow"
-            data-bs-ride="carousel">
+        <section id="carouselExampleCaptions"
+            class="carousel slide border border-1 border-light p-1 rounded shadow w-100 h-100" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
                     aria-current="true" aria-label="Slide 1"></button>
@@ -20,6 +20,7 @@
                                 <img src="<%= postCarousel.resizeImage(1280, 720) %>"
                                     class="d-block border rounded w-100 h-100" alt="Image of the slide-show post"
                                     style="filter: brightness(50%);">
+
                                 <div class="carousel-caption">
                                     <h4>
                                         <%= postCarousel.title %>
@@ -65,7 +66,7 @@
         <% for (postMini of postsMini) { %>
             <article class="col-md-3 mb-2 mt-2 mb-md-0 mt-md-0">
                 <div class="rounded-3">
-                    <img src="<%= postMini.resizeImage(480, 320)%>" class="card-img-top mb-1" alt="...">
+                    <img src="<%= postMini.resizeImage(480, 320) %>" class="card-img-top mb-1" alt="...">
                     <div class="">
                         <span class="text-secondary">
                             <%= postMini.categories.map(category=> category.replace(category.charAt(0),
