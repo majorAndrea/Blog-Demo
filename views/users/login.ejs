@@ -1,0 +1,52 @@
+<% layout("./layouts/boilerplate.ejs") %>
+    <%- include("../layouts/partials/error-flash.ejs") %>
+        <div class="row">
+            <div
+                class="card rounded bg-light shadow col-10 offset-1 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+                <form action="/users/login" method="POST" class="validation px-4 py-3 pt-2" novalidate>
+                    <h1 class="text-center">Login</h1>
+                    <section class="mb-3">
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="email" name="user[email]" autocomplete="off"
+                                value="<%= tempData && tempData.email ? tempData.email : null %>" required>
+                            <label for="email">Email address</label>
+                            <div class="valid-feedback">
+                                OK!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter your username.
+                            </div>
+                        </div>
+
+
+                    </section>
+                    <section class="mb-4">
+                        <div class="form-floating">
+                            <input type="password" class="form-control" id="password" name="user[password]" required>
+                            <label for="email">Password</label>
+                            <div class="valid-feedback">
+                                OK!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter your password.
+                            </div>
+                        </div>
+
+                    </section>
+                    <section>
+                        <div class="form-check">
+                            <label class="form-check-label" for="remember-me">
+                                Remember me
+                            </label>
+                            <input class="form-check-input" type="checkbox" id="remember-me">
+                        </div>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button type="submit" class="btn btn-lg btn-primary mt-3">Login</button>
+                        </div>
+                    </section>
+                </form>
+            </div>
+        </div>
+
+        <% tempData && delete tempData %>

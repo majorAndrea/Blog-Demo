@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark flex-shrink-0 py-3 text-warning">
+    <div class="container-lg container-fluid">
+        <a class="navbar-brand text-warning" href="/">Blog Demo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/posts">All Posts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/posts?category=tech">Tech</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/posts?category=science">Science</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/posts?category=politics">Politics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/posts?category=sport">Sport</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/posts?category=places">Places</a>
+                </li>
+            </ul>
+            <% if (!signedUser) { %>
+                <div class="d-flex justify-content-between d-lg-inline-block">
+                    <a href="/users/login" class="btn btn-sm btn-primary me-0 me-md-2">Login</a>
+                    <a href="/users/register" class="btn btn-sm btn-success">Register</a>
+                </div>
+                <% } else { %>
+                    <div class="d-flex justify-content-between d-lg-inline-block">
+                        <span class="text-light px-0 px-lg-2 align-middle">Welcome Back, <%= signedUser.username %>
+                        </span>
+                        <div class="dropdown d-inline">
+                            <button class="btn btn-sm btn-outline-warning dropdown-toggle" type="button"
+                                id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                Options
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end mt-1 mt-lg-3"
+                                aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="/posts/new">New Post</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item"
+                                        href="/users/<%= signedUser.username %>/dashboard">Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <form action="/users/logout" method="POST">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <li><button type="submit" class="dropdown-item">Logout</button></li>
+                                </form>
+                            </ul>
+                        </div>
+                    </div>
+                    <% } %>
+        </div>
+    </div>
+</nav>

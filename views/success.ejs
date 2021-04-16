@@ -1,0 +1,13 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="alert alert-success text-center" role="alert">
+            <h4 class="alert-heading"><%= success.message %></h4>
+            <% if (success.path) { %> 
+                <a href="<%= success.path %>" class="link-dark"><%= success.redirectMsg %></a>
+            <% } %> 
+            <hr>
+            <p class="mb-0">Click the link above to proceed.</p>  
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<% layout("./layouts/boilerplate.ejs") %>
+    <%- include("../layouts/partials/error-flash.ejs") %>
+        <div class="row">
+            <div
+                class="card rounded bg-light shadow col-10 offset-1 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
+                <form action="/users/register" method="POST" class="validation px-4 py-3 pt-2" novalidate>
+                    <h1 class="text-center">Registration</h1>
+                    <section class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="email" placeholder="Write here your email."
+                            name="user[email]" autocomplete="off" required
+                            value="<%= tempData && tempData.email ? tempData.email : null %>"">
+                <div class=" valid-feedback">
+                        OK!
+            </div>
+            <div class="invalid-feedback">
+                Please enter your email.
+            </div>
+            </section>
+            <section class="mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" class="form-control" id="username" placeholder="Write here your username."
+                    name="user[username]" required
+                    value="<%= tempData && tempData.username ? tempData.username : null %>">
+                <div class="valid-feedback">
+                    OK!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter your username.
+                </div>
+            </section>
+            <section class="mb-4">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" class="form-control" id="password" placeholder="Write here your password."
+                    name="user[password]" required>
+                <div class="valid-feedback">
+                    OK!
+                </div>
+                <div class="invalid-feedback">
+                    Please enter your password.
+                </div>
+            </section>
+            <section class="mb-4">
+                <label for="confirm_password" class="form-label">Confirm Password:</label>
+                <input type="password" class="form-control" id="confirm_password" placeholder="Confirm your password."
+                    name="user[repeat_password]" required>
+                <div class="valid-feedback">
+                    OK!
+                </div>
+                <div class="invalid-feedback">
+                    Please confirm your password.
+                </div>
+            </section>
+            <section>
+                <div class="form-check">
+                    <label class="form-check-label" for="remember-me">
+                        I like this checkbox
+                    </label>
+                    <input class="form-check-input" type="checkbox" id="remember-me">
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="btn btn-lg btn-success mt-3">Submit</button>
+                </div>
+            </section>
+
+            </form>
+        </div>
+        </div>
+
+        <% tempData && delete tempData %>

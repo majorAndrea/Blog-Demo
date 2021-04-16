@@ -1,0 +1,16 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="alert alert-danger text-center" role="alert">
+            <h4 class="alert-heading"><%= err.message %></h4>
+            <% if (path) { %> 
+                <a href="<%= path %>" class="link-dark"><%= redirectMsg %></a>
+            <% } %> 
+            <hr>
+            <% if (process.env.NODE_ENV !== "production") { %> 
+                <p><%= err.stack %></p>
+            <% } %>
+            <p class="mb-0">If you think there is an error, please contact us.</p>  
+        </div>
+    </div>
+</div>

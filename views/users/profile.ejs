@@ -1,0 +1,51 @@
+<% layout("./layouts/boilerplate.ejs") %>
+  <%- include("../layouts/partials/error-flash.ejs") %>
+    <div class="tab-pane fade show active" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+      <div class="card col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+        <!-- IMAGE SECTION -->
+        <div class="p-3 pb-2">
+          <img src="<%= userImage %>" class="card-img-top img-fluid" alt="<% username %> profile image.">
+        </div>
+        <div class="card-body pt-1">
+          <ul class="list-group list-group-flush">
+            <!-- USERNAME SECTION -->
+            <h5 class="card-title mb-0 mt-2">Username:</h5>
+            <li class="list-group-item px-0 pb-3">
+              <div class="d-flex justify-content-between">
+                <span class="align-self-end">
+                  <%= username %>
+                </span>
+              </div>
+            </li>
+            <!-- BIRTHDATE SECTION -->
+            <h5 class="card-title mb-0 mt-2">Birthdate:</h5>
+            <li class="list-group-item px-0 pb-3">
+              <div class="d-flex justify-content-between">
+                <span class="align-self-end">
+                  <% if (userBirthday) { %>
+                    <%= userBirthday %>
+                      <% } else { %>
+                        <span class="text-muted">N/A</span>
+                        <% } %>
+                </span>
+              </div>
+            </li>
+            <!-- BIO SECTION -->
+            <h5 class="card-title mb-0 mt-2">
+              <%= username %> Bio:
+            </h5>
+            <li class="list-group-item text-end px-0">
+              <div class="d-flex justify-content-between text-start">
+                <% if (userBio) { %>
+                  <p class="p-0 m-0 text-break text-wrap">
+                    <%= userBio %>
+                  </p>
+                  <% } else { %>
+                    <span class="text-muted">This user doesn't have a bio.</span>
+                    <% } %>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>

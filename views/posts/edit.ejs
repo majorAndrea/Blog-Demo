@@ -1,0 +1,55 @@
+<% layout("/layouts/boilerplate.ejs") %>
+<div class="row">
+    <h1 class="text-center">Edit Post</h1>
+    <div class="card col-md-8 offset-md-2 col-lg-6 offset-lg-3 shadow bg-light shadow border rounded-3">
+        <form action="/posts/<%= post._id %>?_method=PUT" method="POST" class="validation p-5" novalidate>
+            <section class="mb-3">
+                <label for="title" class="form-label">Title:</label>
+                <input type="text" class="form-control" id="title"
+                    placeholder="Title for the Blog Post" name="post[title]" value="<%= post.title %>" required>
+                <div class="valid-feedback">
+                    OK!
+                </div>
+                <div class="invalid-feedback">
+                    Please write a title.
+                </div>
+            </section>
+            <section class="mb-3">
+                <label for="text" class="form-label">Text:</label>
+                <textarea class="form-control" id="text" rows="9" name="post[text]" required><%= post.text %></textarea>
+                <div class="valid-feedback">
+                    OK!
+                </div>
+                <div class="invalid-feedback">
+                    Please write a text for the post.
+                </div>
+            </section>
+            <section class="mb-3">
+                <p class="form-label">Categories:</p>     
+                <% for (category of postCategories) { %> 
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" value="<%= category %>" id="<%= category %>" name="post[categories]" <%= post.categories.includes(category) ? "checked" : "" %> >
+                        <label class="form-check-label" for="<%= category %>">
+                            <%= category.replace(category[0], category[0].toUpperCase()); %>
+                        </label>
+                    </div>
+                <% } %> 
+                <div class="valid-feedback">
+                    OK!
+                </div>
+                <div class="invalid-feedback">
+                    Please select some categories.
+                </div>
+            </section>
+            <section class="location-field mt-3 d-none">
+                <label for="title" class="form-label">Location:</label>
+                <input type="text" class="form-control" id="title"
+                    placeholder="Location name" name="post[location]" disabled>
+            </section>
+            <section class="text-end">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="btn btn-lg btn-success mt-3">Save Post</button>
+            </section>
+        </form>
+    </div>
+</div>
