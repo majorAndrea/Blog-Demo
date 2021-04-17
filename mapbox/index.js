@@ -40,6 +40,8 @@ const geocode = asyncHandler(async (req, res, next) => {
         redirectInfo,
       });
     }
+  } else {
+    return next();
   }
 });
 
