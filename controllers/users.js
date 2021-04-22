@@ -1,6 +1,7 @@
 const Auth = require("./auth.js");
 const User = require("../models/users.js");
 const Post = require("../models/posts.js");
+const Comment = require("../models/comments.js");
 const asyncHandler = require("../utils/async-handler.js");
 
 module.exports.renderLogin = (req, res) => {
@@ -23,12 +24,14 @@ module.exports.renderDashboard = asyncHandler(async (req, res) => {
     { bio: 1, birthday: 1, image: 1 }
   );
   const userPosts = await Post.getAllPostsOfUser(req.params.username);
-  res.render("users/dashboard.ejs", {
+  const userComments = await Comment.getAllCommentsOfUser(req.params.username);
+  res.render("users/dashboard/index.ejs", {
     csrfToken: req.csrfToken(),
     userImage: (userInfo.image && userInfo.image.path) || undefined,
     userBio: userInfo.bio || undefined,
     userBirthday: userInfo.retriveDate(),
     userPosts: userPosts || undefined,
+    userComments: userComments || undefined,
     failureMsg: undefined,
   });
 });

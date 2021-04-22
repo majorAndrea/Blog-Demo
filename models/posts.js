@@ -98,15 +98,17 @@ postSchema.statics.getAllPostsOfUser = async function (username) {
       path: "author",
       select: "username",
     })
-  ).filter((post) => post.author.username === username);
-  // Only get and return the important stuff of the post.
-  const postsTransformed = postsFounded.map((post) => ({
-    _id: post._id,
-    title: post.title,
-    image: post.image.path,
-    text: post.text,
-  }));
-  return postsTransformed;
+  )
+    //Get only the posts created by the specific user.
+    .filter((post) => post.author.username === username)
+    //Retrive only the important data.
+    .map((post) => ({
+      _id: post._id,
+      title: post.title,
+      image: post.image.path,
+      text: post.text,
+    }));
+  return postsFounded;
 };
 
 // When deleting one Post also delete all the comments for that post.

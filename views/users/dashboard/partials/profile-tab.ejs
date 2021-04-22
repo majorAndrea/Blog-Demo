@@ -1,0 +1,119 @@
+<!-- PROFILE TAB -->
+<div class="tab-pane fade show active" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+  <!-- START CARD -->
+  <div class="card">
+    <!-- IMAGE SECTION -->
+    <div class="p-3 pb-2 position-relative">
+      <img src="<%= userImage %>" class="card-img-top" alt="Your profile image.">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-sm btn-primary position-absolute top-0 start-0 m-4" data-bs-toggle="modal"
+        data-bs-target="#imageEditModal">
+        Change
+      </button>
+    </div>
+    <!-- Edit Image Modal -->
+    <div class="modal fade" id="imageEditModal" tabindex="-1" aria-labelledby="imageEditModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="imageEditModalLabel">Change Profile Image</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <!-- Edit form -->
+          <div class="modal-body">
+            <form action="/users/<%= signedUser.username %>?_method=PATCH&_csrf=<%= csrfToken %>" method="POST"
+              class="mt-1 mb-2" enctype="multipart/form-data">
+              <label for="image" class="form-label">Upload the new Image:</label>
+              <input type="file" class="form-control" id="image" name="user[image]">
+              <div class="d-flex justify-content-between p-0 mt-4">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal -->
+    <div class="card-body pt-1">
+      <ul class="list-group list-group-flush">
+        <!-- USERNAME SECTION -->
+        <h5 class="card-title mb-0 mt-2">Username:</h5>
+        <li class="list-group-item px-0 pb-3">
+          <div class="d-flex justify-content-between">
+            <span class="align-self-end">
+              <%= signedUser.username %>
+            </span>
+            <button class="btn btn-secondary btn-sm text-end" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseUserNameEdit" aria-expanded="false"
+              aria-controls="collapseUserNameEdit">Change</button>
+          </div>
+          <!-- Edit form -->
+          <div class="collapse mt-3 text-start" id="collapseUserNameEdit">
+            <form action="/users/<%= signedUser.username %>?_method=PATCH" method="POST"
+              class="d-flex flex-column justify-content-center align-items-center">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <label for="username" class="form-label text-muted">Your new username:</label>
+              <input type="text" name="user[username]" id="username" value="<%= signedUser.username %>"
+                placeholder="Username">
+              <button class="btn btn-sm btn-success mt-3" type="submit">Submit Change</button>
+            </form>
+          </div>
+        </li>
+        <!-- BIRTHDATE SECTION -->
+        <h5 class="card-title mb-0 mt-2">Birthdate:</h5>
+        <li class="list-group-item px-0 pb-3">
+          <div class="d-flex justify-content-between">
+            <span class="align-self-end">
+              <% if (userBirthday) { %>
+                <%= userBirthday %>
+                  <% } else { %>
+                    <span class="text-muted">N/A</span>
+                    <% } %>
+            </span>
+            <button class="btn btn-secondary btn-sm mt-2 text-end" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapseBirthDayEdit" aria-expanded="false"
+              aria-controls="collapseBirthDayEdit">Change</button>
+          </div>
+          <!-- Edit form -->
+          <div class="collapse mt-3 text-start" id="collapseBirthDayEdit">
+            <form action="/users/<%= signedUser.username %>?_method=PATCH" method="POST"
+              class="d-flex flex-column justify-content-center align-items-center">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <label for="birthday" class="form-label text-muted">Select your birthdate:</label>
+              <input type="date" id="birthday" name="user[birthday]" value="<%= userBirthday !== " N/A" ?
+                userBirthday.split("/").reverse().join("-") : "yyyy-mm-dd" %>">
+              <button class="btn btn-sm btn-success mt-3" type="submit">Submit Change</button>
+            </form>
+          </div>
+        </li>
+        <!-- BIO SECTION -->
+        <h5 class="card-title mb-0 mt-2">Your Bio:</h5>
+        <li class="list-group-item text-end px-0">
+          <div class="d-flex justify-content-between text-start">
+            <% if (userBio) { %>
+              <p class="p-0 m-0 text-break text-wrap">
+                <%= userBio %>
+              </p>
+              <% } else { %>
+                <span class="text-muted">You haven't written any bio. Click 'change' to write it.</span>
+                <% } %>
+          </div>
+          <button class="btn btn-secondary btn-sm text-end mt-2 mt-md-0" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseBioEdit" aria-expanded="false" aria-controls="collapseBioEdit">Change</button>
+          <!-- Edit form -->
+          <div class="collapse mt-3 text-start" id="collapseBioEdit">
+            <form action="/users/<%= signedUser.username %>?_method=PATCH" method="POST">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <label for="bio" class="form-label text-muted">Write here your Bio:</label>
+              <textarea class="form-control" id="bio" rows="3" name="user[bio]" placeholder="Write your bio here."
+                required><%= userBio %></textarea>
+              <button class="btn btn-sm btn-success mt-3" type="submit">Submit Change</button>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- END CARD -->
+</div>

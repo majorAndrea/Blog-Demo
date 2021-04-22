@@ -7,7 +7,6 @@ const { cloudinary } = require("../cloudinary/");
 
 module.exports.createPost = asyncHandler(async (req, res) => {
   // CREATE
-  console.log("CONTROLLER");
   const newPost = new Post(req.body.post);
   newPost.author = Auth.Session.getUserFromSession(req).id;
   newPost.image = req.file;

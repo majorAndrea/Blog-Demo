@@ -1,0 +1,27 @@
+<% layout("./layouts/boilerplate.ejs") %>
+  <%- include("../../layouts/partials/error-flash.ejs") %>
+    <div class="row">
+      <!-- MINI MENU -->
+      <div class="mb-4 mb-md-0 col-12 col-sm-12 col-md-4 col-lg-3 offset-lg-1">
+        <div class="list-group" id="list-tab" role="tablist">
+          <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list"
+            href="#list-profile" role="tab" aria-controls="profile">Profile</a>
+          <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list"
+            href="#list-stats" role="tab" aria-controls="stats">Stats</a>
+          <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list"
+            href="#list-settings" role="tab" aria-controls="settings">Settings</a>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-8 col-lg-5 offset-lg-1">
+        <div class="tab-content" id="nav-tabContent">
+          <!-- PROFILE TAB -->
+          <%- include("./partials/profile-tab.ejs") %>
+            <!-- STATS TAB -->
+            <%- include("./partials/stats-tab.ejs") %>
+              <!-- SETTINGS TAB -->
+              <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+                <!--  -->
+              </div>
+        </div>
+      </div>
+    </div>

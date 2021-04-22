@@ -18,4 +18,18 @@ commentSchema.methods.retriveDate = function () {
   return formatDate(this, "createdAt");
 };
 
+// Get all comments related to an user.
+commentSchema.statics.getAllCommentsOfUser = async function (username) {
+  const commentsFounded = (await this.find().populate("author"))
+    // Only get the comments related to a specific user.
+    .filter((comment) => comment.author.username === username)
+    // Retrive only the important data.
+    .map((comment) => ({
+      _id: comment._id,
+      text: comment.text,
+      createdAt: formatDate(comment, "createdAt"),
+    }));
+  return commentsFounded;
+};
+
 module.exports = mongoose.model("Comment", commentSchema);
