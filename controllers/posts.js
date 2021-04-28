@@ -16,6 +16,7 @@ module.exports.createPost = asyncHandler(async (req, res) => {
     message: "Post successfully created!",
     redirectMsg: "Click here to redirect you to see the Post.",
   };
+  res.location(success.path);
   res.status(201).render("success.ejs", { success });
 });
 
@@ -46,6 +47,7 @@ module.exports.updatePost = asyncHandler(async (req, res) => {
     message: "Post successfully updated!",
     redirectMsg: "Click here to redirect you to the Post.",
   };
+  res.location(success.path);
   res.status(200).render("success.ejs", { success });
 });
 
@@ -62,6 +64,7 @@ module.exports.updatePostImage = asyncHandler(async (req, res) => {
     updatedPost.image = req.file;
     await updatedPost.save();
     success.message = "Image of the Post successfully updated.";
+    res.location(success.path);
     res.status(200).render("success.ejs", { success });
   } else {
     success.message = "Image of the Post is the same, no changes made.";
@@ -79,6 +82,7 @@ module.exports.deletePost = asyncHandler(async (req, res) => {
     message: "Post successfully deleted!",
     redirectMsg: "Click here to redirect you to back.",
   };
+  res.location(success.path);
   res.status(200).render("success.ejs", { success });
 });
 
