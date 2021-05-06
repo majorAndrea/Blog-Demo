@@ -4,8 +4,11 @@ const { validatePost } = require("../utils/val-middleware.js");
 const Auth = require("../controllers/auth.js");
 const posts = require("../controllers/posts.js");
 const multer = require("multer");
-const { storage } = require("../cloudinary");
-const upload = multer({ storage });
+const { storage, fileFilter } = require("../cloudinary");
+const upload = multer({
+  storage,
+  fileFilter: fileFilter,
+});
 const { geocode } = require("../mapbox/");
 
 // ----- GET ROUTES ----------------->

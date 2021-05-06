@@ -18,6 +18,7 @@ class AppError extends Error {
     if (data) {
       req.session.tempData = data;
     }
+    res.location(path);
     res
       .status(this.status)
       .render("error.ejs", { err: this, path, redirectMsg });

@@ -29,7 +29,28 @@ const checkErrors = async (
 
 const validatePost = (req, res, next) => {
   const { post } = req.body;
-  const { error } = postValidationSchema.validate(post);
+  let { error } = postValidationSchema.validate(post);
+  // If this validate runs, then only check for errors regarding the image (no image or invalid format)
+  // only for new Posts. Check the function fileFilter inside cloudinary folder to understand better this process.
+  if (!req.file && req.method !== "PUT") {
+    // If there is already an error, push this too.
+    if (error) {
+      error.details.push({
+        message:
+          "The image format you have uploaded is not supported, please upload only supported formats.",
+      });
+    } else {
+      // If no error, then create the entire error object.
+      error = {
+        details: [
+          {
+            message:
+              "The image format you have uploaded is not supported, please upload only supported formats.",
+          },
+        ],
+      };
+    }
+  }
   checkErrors(
     error,
     next,
@@ -90,7 +111,7 @@ const findDuplicates = async (email = undefined, username = undefined) => {
   if (email) {
     const duplicateEmail = await User.findDuplicates("email", email);
     if (duplicateEmail) {
-      // Adapt this return Object to be like Joi return error Object to be used fine in CheckErrors.
+      // Adapt this return Object to be like Joi return error Object to be used in CheckErrors.
       return {
         details: [
           {
@@ -103,7 +124,7 @@ const findDuplicates = async (email = undefined, username = undefined) => {
   if (username) {
     const duplicateUsername = await User.findDuplicates("username", username);
     if (duplicateUsername) {
-      // Adapt this return Object to be like Joi return error Object to be used fine in CheckErrors.
+      // Adapt this return Object to be like Joi return error Object to be used in CheckErrors.
       return {
         details: [
           {
