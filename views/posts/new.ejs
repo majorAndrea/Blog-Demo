@@ -1,17 +1,15 @@
 <% layout("/layouts/boilerplate.ejs") %>
-    <div class="row">
-        <h1 class="text-center">Add New Post</h1>
-        <div class="card col-md-8 offset-md-2 col-lg-6 offset-lg-3 shadow bg-light shadow border rounded-3">
-            <form action="/posts?_csrf=<%= csrfToken %>" method="POST" class="p-3 p-md-5 validation" novalidate
-                enctype="multipart/form-data" autocomplete="off">
+    <div class="d-flex flex-column flex-lg-row justify-content-between">
+        <!-- NEW POST ARTICLE -->
+        <article class="card shadow bg-light shadow border rounded-3 order-1 order-lg-2">
+            <h1 class="text-center pb-2">Add New Post</h1>
+            <form action="/posts?_csrf=<%= csrfToken %>" method="POST" class="post-form ps-5 pe-5 pb-5 validation"
+                novalidate enctype="multipart/form-data" autocomplete="off">
                 <!-- TITLE INPUT -->
                 <section class="mb-3">
                     <label for="title" class="form-label">Title:</label>
                     <input type="text" class="form-control" id="title" placeholder="Title for the Blog Post"
                         name="post[title]" value="<%= tempData && tempData.title ? tempData.title : null %>" required>
-                    <div class="valid-feedback">
-                        OK!
-                    </div>
                     <div class="invalid-feedback">
                         Please write a title.
                     </div>
@@ -20,9 +18,6 @@
                 <section class="mb-3">
                     <label for="image" class="form-label">Post Image:</label>
                     <input type="file" class="form-control" id="image" name="post[image]" required>
-                    <div class="valid-feedback">
-                        OK!
-                    </div>
                     <div class="invalid-feedback">
                         Image required!
                     </div>
@@ -33,9 +28,6 @@
                     <textarea class="form-control" id="text" rows="9" name="post[text]"
                         placeholder="Write the text of the post here."
                         required><%= tempData && tempData.text ? tempData.text : null %></textarea>
-                    <div class="valid-feedback">
-                        OK!
-                    </div>
                     <div class="invalid-feedback">
                         Please write a text for the post.
                     </div>
@@ -47,7 +39,7 @@
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" value="<%= category %>" id="<%= category %>"
                                 name="post[categories]" <%=tempData && tempData.categories &&
-                                tempData.categories.includes(category) ? "checked" : null %> >
+                                tempData.categories.includes(category) ? "checked" : null %>>
                             <label class="form-check-label" for="<%= category %>">
                                 <%= category.replace(category[0], category[0].toUpperCase()); %>
                             </label>
@@ -57,17 +49,20 @@
                 <!-- LOCATION FIELD & Hidden by default and not required. -->
                 <section class="location-field mt-3 <%= tempData && tempData.location ? null : " d-none" %>
                     ">
-                    <label for="title" class="form-label">Location:</label>
-                    <input type="text" class="form-control" id="title" placeholder="Location name" name="post[location]"
-                        value="<%= tempData && tempData.location ? tempData.location : null  %>" <%=tempData &&
-                        tempData.location ? null : "disabled" %>>
+                    <label for="location" class="form-label">Location:</label>
+                    <input type="text" class="form-control" id="location" placeholder="Location name"
+                        name="post[location]" value="<%= tempData && tempData.location ? tempData.location : null  %>"
+                        <%=tempData && tempData.location ? null : "disabled" %>>
                 </section>
                 <!-- Submit Button -->
                 <section class="text-end">
                     <button type="submit" class="btn btn-lg btn-success mt-3">Submit Post</button>
                 </section>
             </form>
-        </div>
+        </article>
+        <!-- RULES ASIDE -->
+        <%- include("./partials/rules.ejs") %>
+
     </div>
 
     <% tempData && delete tempData %>

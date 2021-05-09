@@ -1,8 +1,8 @@
 <% layout("/layouts/boilerplate.ejs") %>
-    <div class="row">
-        <h1 class="text-center">Edit Post</h1>
-        <div class="card col-md-8 offset-md-2 col-lg-6 offset-lg-3 shadow bg-light shadow border rounded-3">
-            <form action="/posts/<%= post._id %>?_method=PUT" method="POST" class="validation p-5" novalidate>
+    <div class="d-flex flex-column flex-lg-row justify-content-between">
+        <article class="card shadow bg-light shadow border rounded-3 order-1 order-lg-2">
+            <h1 class="text-center">Edit Post</h1>
+            <form action="/posts/<%= post._id %>?_method=PUT" method="POST" class="validation p-5 post-form" novalidate>
                 <!-- TITLE INPUT -->
                 <section class="mb-3">
                     <label for="title" class="form-label">Title:</label>
@@ -49,9 +49,10 @@
                 <!-- LOCATION FIELD & Hidden by default and not required. -->
                 <section class="location-field mt-3 <%= post.location?.placename? null : " d-none" %>
                     ">
-                    <label for="title" class="form-label">Location:</label>
-                    <input type="text" class="form-control" id="title" placeholder="Location name" name="post[location]"
-                        value="<%= post.location?.placename? post.location.placename : " d-none" %>"
+                    <label for="location" class="form-label">Location:</label>
+                    <input type="text" class="form-control" id="location" placeholder="Location name"
+                        name="post[location]" value="<%= post.location?.placename? post.location.placename : " d-none"
+                        %>"
                     <%=post.location?.placename? null : "disabled" %>>
                 </section>
                 <!-- Submit Button -->
@@ -60,5 +61,7 @@
                     <button type="submit" class="btn btn-lg btn-success mt-3">Save Post</button>
                 </section>
             </form>
-        </div>
+        </article>
+        <!-- RULES ASIDE -->
+        <%- include("./partials/rules.ejs") %>
     </div>
