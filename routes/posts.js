@@ -7,7 +7,7 @@ const multer = require("multer");
 const { storage, fileFilter } = require("../cloudinary");
 const upload = multer({
   storage,
-  fileFilter: fileFilter,
+  fileFilter,
 });
 const { geocode } = require("../mapbox/");
 

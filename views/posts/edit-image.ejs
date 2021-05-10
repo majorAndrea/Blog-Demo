@@ -1,23 +1,19 @@
 <% layout("/layouts/boilerplate.ejs") %>
-<div class="row">
-    <h1 class="text-center">Change Image of the Post</h1>
-    <div class="card col-md-8 offset-md-2 col-lg-6 offset-lg-3 shadow bg-light shadow border rounded-3">
-        <form action="/posts/<%= post._id %>/image?_method=PATCH&_csrf=<%= csrfToken %>" method="POST" class="validation p-5" novalidate enctype="multipart/form-data">
-            </section>
-            <section class="mb-3">
-                <img src="<%= post.image.path %>" alt="The original image of the Post" class="p-1 img-fluid mb-3 border border-secondary rounded">
-                <label for="image" class="form-label">New Image:</label>
-                <input type="file" class="form-control" id="image" name="post[image]" >
-                <div class="valid-feedback">
-                    OK!
-                </div>
-                <div class="invalid-feedback">
-                    Image required!
-                </div>
-            </section>
-            <section class="text-end">
-                <button type="submit" class="btn btn-lg btn-success mt-3">Save</button>
-            </section>
-        </form>
+    <div class="row">
+        <h1 class="text-center">Change Image of the Post</h1>
+        <div class="card col-md-8 offset-md-2 col-lg-6 offset-lg-3 shadow bg-light shadow border rounded-3">
+            <form action="/posts/<%= post._id %>/image?_method=PATCH&_csrf=<%= csrfToken %>" method="POST" class="p-5"
+                enctype="multipart/form-data">
+                </section>
+                <section class="mb-3">
+                    <img src="<%= post.image.path %>" alt="The original image of the Post"
+                        class="p-1 img-fluid mb-3 border border-secondary rounded">
+                    <label for="image" class="form-label">New Image:</label>
+                    <input type="file" class="form-control" id="image" name="post[image]">
+                </section>
+                <section class="text-end">
+                    <button type="submit" class="btn btn-lg btn-success mt-3">Save</button>
+                </section>
+            </form>
+        </div>
     </div>
-</div>

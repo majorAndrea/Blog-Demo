@@ -2,58 +2,43 @@
     <div class="d-flex flex-column flex-lg-row justify-content-between">
         <article class="card shadow bg-light shadow border rounded-3 order-1 order-lg-2">
             <h1 class="text-center">Edit Post</h1>
-            <form action="/posts/<%= post._id %>?_method=PUT" method="POST" class="validation p-5 post-form" novalidate>
+            <form action="/posts/<%= post._id %>?_method=PUT" method="POST"
+                class="post-form ps-3 pe-3 pb-3 ps-sm-5 pe-sm-5 pb-sm-5" autocomplete="off">
                 <!-- TITLE INPUT -->
                 <section class="mb-3">
                     <label for="title" class="form-label">Title:</label>
                     <input type="text" class="form-control" id="title" placeholder="Title for the Blog Post"
-                        name="post[title]" value="<%= post.title %>" required>
-                    <div class="valid-feedback">
-                        OK!
-                    </div>
-                    <div class="invalid-feedback">
-                        Please write a title.
-                    </div>
+                        name="post[title]" value="<%= post.title %>" required minlength="24" maxlength="96">
                 </section>
                 <!-- TEXTAREA -->
                 <section class="mb-3">
                     <label for="text" class="form-label">Text:</label>
-                    <textarea class="form-control" id="text" rows="9" name="post[text]"
-                        required><%= post.text %></textarea>
-                    <div class="valid-feedback">
-                        OK!
-                    </div>
-                    <div class="invalid-feedback">
-                        Please write a text for the post.
-                    </div>
+                    <textarea class="form-control" id="text" rows="9" name="post[text]" required minlength="128"
+                        maxlength="2048"><%= post.text %></textarea>
                 </section>
                 <!-- CATEGORIES CHECKBOXES -->
                 <section class="mb-3">
+                    <p class="m-0 p-0 text-danger d-none text-center" id="category-msg">You must select at least
+                        one
+                        category!</p>
                     <p class="form-label">Categories:</p>
                     <% for (category of postCategories) { %>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" value="<%= category %>" id="<%= category %>"
-                                name="post[categories]" <%=post.categories.includes(category) ? "checked" : "" %> >
+                                name="post[categories]" <%=post.categories.includes(category) ? "checked" : null %> >
                             <label class="form-check-label" for="<%= category %>">
                                 <%= category.replace(category[0], category[0].toUpperCase()); %>
                             </label>
                         </div>
                         <% } %>
-                            <div class="valid-feedback">
-                                OK!
-                            </div>
-                            <div class="invalid-feedback">
-                                Please select some categories.
-                            </div>
                 </section>
                 <!-- LOCATION FIELD & Hidden by default and not required. -->
                 <section class="location-field mt-3 <%= post.location?.placename? null : " d-none" %>
                     ">
                     <label for="location" class="form-label">Location:</label>
-                    <input type="text" class="form-control" id="location" placeholder="Location name"
-                        name="post[location]" value="<%= post.location?.placename? post.location.placename : " d-none"
-                        %>"
-                    <%=post.location?.placename? null : "disabled" %>>
+                    <input type="text" class="form-control is-invalid" id="location" placeholder="Location name"
+                        name="post[location]" value="<%= post.location?.placename? post.location.placename : null
+                        %>" <%=post.location?.placename? null : "disabled" %> minlength="3" maxlength="36">
                 </section>
                 <!-- Submit Button -->
                 <section class="text-end">

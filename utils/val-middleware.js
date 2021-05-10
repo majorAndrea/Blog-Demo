@@ -1,4 +1,4 @@
-const postValidationSchema = require("../joi/posts.js");
+const { postValidationSchema } = require("../joi/posts.js");
 const commentValidationSchema = require("../joi/comments.js");
 const {
   userValidationSchema,

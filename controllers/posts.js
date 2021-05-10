@@ -2,7 +2,7 @@ const Post = require("../models/posts.js");
 const asyncHandler = require("../utils/async-handler.js");
 const Auth = require("./auth.js");
 const { cloudinary } = require("../cloudinary/");
-
+const { postRules } = require("../joi/posts.js");
 // ------- C.R.U.D -------------->
 
 module.exports.createPost = asyncHandler(async (req, res) => {
@@ -102,7 +102,11 @@ module.exports.renderIndexPosts = asyncHandler(async (req, res) => {
 
 module.exports.renderCreatePost = (req, res) => {
   const postCategories = Post.getCategories();
-  res.render("posts/new.ejs", { postCategories, csrfToken: req.csrfToken() });
+  res.render("posts/new.ejs", {
+    postCategories,
+    csrfToken: req.csrfToken(),
+    postRules,
+  });
 };
 
 module.exports.renderUpdatePost = asyncHandler(async (req, res) => {

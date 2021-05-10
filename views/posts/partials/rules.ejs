@@ -1,34 +1,37 @@
-<aside class="order-2 order-lg-1 me-0 me-lg-3 me-xl-3 me-xxl-0">
+<aside class="order-2 order-lg-1 me-0 me-lg-3 me-xl-3 me-xxl-0 mt-3 mt-lg-0">
   <h2 class="mb-0 pb-2">Rules of the Post</h2>
   <ul class="list-group shadow">
+    <!-- Title -->
     <li class="list-group-item px-3 py-4">
       <h6 class="d-flex flex-row justify-content-between">Title <span
           class="badge rounded-pill bg-danger title-badge">Not OK</span></h6>
       <p class="p-0 m-0" id="title-paragraph">Title must be between <span></span> and <span></span> characters</p>
-
     </li>
-    <li class="list-group-item px-3 py-4 bg-light">
+    <!-- Image -->
+    <li class="list-group-item px-3 py-4 bg-light d-none" id="image-li">
       <h6 class="d-flex flex-row justify-content-between">Image <span class="badge rounded-pill bg-danger img-badge">Not
           OK</span></h6>
-      Image is required.
+      <p class="m-0 p-0">Image is required.</p>
     </li>
+    <!-- Description -->
     <li class="list-group-item px-3 py-4">
       <h6 class="d-flex flex-row justify-content-between">Description <span
           class="badge rounded-pill bg-danger desc-badge">Not OK</span></h6>
       <p class="p-0 m-0" id="text-paragraph">A full description for the Post. Must be between <span></span> and
         <span></span> characters.
       </p>
-
     </li>
+    <!-- Categories -->
     <li class="list-group-item px-3 py-4 bg-light">
       <h6 class="d-flex flex-row justify-content-between">Cateogories <span
           class="badge rounded-pill bg-danger cat-badge">Not OK</span></h6>
-      Choose the appropriate categories. Check at least one.
+      <p class="m-0 p-0">Choose the appropriate categories. Check at least one.</p>
     </li>
-    <li class="list-group-item px-3 py-4">
+    <!-- Optional Location Category -->
+    <li class="list-group-item px-3 py-4 d-none" id="location-li">
       <h6 class="d-flex flex-row justify-content-between">Location Category <span
-          class="badge rounded-pill bg-danger">Not OK</span></h6>
-      The Location category is optional if not checked.
+          class="badge rounded-pill bg-danger location-cat-badge">Not OK</span></h6>
+      <p class="m-0 p-0">The Location category is optional if not checked.</p>
     </li>
   </ul>
 </aside>
