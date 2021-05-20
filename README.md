@@ -1,6 +1,6 @@
 # Blog-Demo.
 
-My first full-stack webdev project.
+My first full-stack webdev RESTFul project.
 
 Tech used:
 
