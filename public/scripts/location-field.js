@@ -18,16 +18,11 @@
     locationLi.classList.toggle("d-none");
   };
 
-  // To not throw any errors if someone try to type manually some
-  // urls like "/posts/new" without beign authenticated because the
-  // addEventListener attempts to bind anyway.
-  if (placesCheckbox && locField && locFieldInput) {
-    placesCheckbox.addEventListener("input", function () {
-      if (this.checked) {
-        enableInput();
-      } else {
-        disableInput();
-      }
-    });
-  }
+  placesCheckbox.addEventListener("input", function () {
+    if (this.checked) {
+      enableInput();
+    } else {
+      disableInput();
+    }
+  });
 })();

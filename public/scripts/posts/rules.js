@@ -20,29 +20,25 @@
   // When editing one Post vs when creating a new one, there is a difference on
   // the postForm elements index, because the image input is not available when editing
   // the Post, so switch to querySelector.
-  const MAX_CHARS_TEXT = document.querySelector("#text").attributes.maxlength
-    .value;
-  const MIN_CHARS_TEXT = document.querySelector("#text").attributes.minlength
-    .value;
-  const MAX_CHARS_LOCATION = document.querySelector("#location").attributes
-    .maxlength.value;
-  const MIN_CHARS_LOCATION = document.querySelector("#location").attributes
-    .minlength.value;
+  const MAX_CHARS_TEXT =
+    document.querySelector("#text").attributes.maxlength.value;
+  const MIN_CHARS_TEXT =
+    document.querySelector("#text").attributes.minlength.value;
+  const MAX_CHARS_LOCATION =
+    document.querySelector("#location").attributes.maxlength.value;
+  const MIN_CHARS_LOCATION =
+    document.querySelector("#location").attributes.minlength.value;
 
   // Title max-min values.
-  document.querySelector(
-    "#title-paragraph span:last-child"
-  ).textContent = MAX_CHARS_TITLE;
-  document.querySelector(
-    "#title-paragraph span:first-child"
-  ).textContent = MIN_CHARS_TITLE;
+  document.querySelector("#title-paragraph span:last-child").textContent =
+    MAX_CHARS_TITLE;
+  document.querySelector("#title-paragraph span:first-child").textContent =
+    MIN_CHARS_TITLE;
   // Desc max-min values.
-  document.querySelector(
-    "#text-paragraph span:last-child"
-  ).textContent = MAX_CHARS_TEXT;
-  document.querySelector(
-    "#text-paragraph span:first-child"
-  ).textContent = MIN_CHARS_TEXT;
+  document.querySelector("#text-paragraph span:last-child").textContent =
+    MAX_CHARS_TEXT;
+  document.querySelector("#text-paragraph span:first-child").textContent =
+    MIN_CHARS_TEXT;
 
   const changeStyleState = (badgeRef, eventRef, state) => {
     if (state) {
@@ -87,7 +83,7 @@
     changeStyleState(badgeRef, eventRef, false);
   };
 
-  const checkElements = (event) => {
+  const parseElements = (event) => {
     // Create the right object if the event variable is not a
     // "true" event from an event listener but from the forEach loop insted.
     event.target ? null : (event.target = event);
@@ -138,7 +134,7 @@
 
   // Listen for user inputs inside one of the input elements.
   postForm.addEventListener("input", (event) => {
-    checkElements(event);
+    parseElements(event);
   });
 
   // Prevent user from submitting if the Post is not correctly filled.
@@ -158,5 +154,5 @@
   });
 
   // Fire the validation one time without user interactions.
-  Array.from(postForm.elements).forEach((el) => checkElements(el));
+  Array.from(postForm.elements).forEach((el) => parseElements(el));
 })();

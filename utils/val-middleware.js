@@ -58,7 +58,7 @@ const validatePost = (req, res, next) => {
       path: `${req.method === "POST" ? "posts/new" : `${req.params.id}/edit`}`,
       status: 422,
       data: (() => {
-        // I used an immediately invoked function expression because just to omit using the parentheses when accessing "data".
+        // Smart use for immediately invoked function expression?
         if (req.method === "POST") {
           // Return the post data only for POST requests.
           return post;

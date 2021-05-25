@@ -8,10 +8,10 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-// This function will make the Post validation fail because if the format of the image
-// is not allowed, then this function will abort the uploading process of the image
-// then inside the validatePost the request object will not have any image so
-// it will fire raise the validation error.
+// This function will make the Post validation fail because if the format of
+// the image is not allowed, then this function will abort the uploading process
+// of the image then inside the validatePost the request object will not
+// have any image so it will raise the validation error.
 const fileFilter = (req, file, cb) => {
   if (mimeTypesWhiteList.includes(file.mimetype)) {
     cb(null, true);

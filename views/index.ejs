@@ -17,7 +17,7 @@
                     <% for (postCarousel of postsCarousel) { %>
                         <article class="carousel-item <%= isFirst ? " active" : "" %>">
                             <% isFirst=false; %>
-                                <img src="<%= postCarousel.resizeImage(1280, 720) %>"
+                                <img src="<%= postCarousel.resizeImage(1280, 780) %>"
                                     class="d-block border rounded w-100 h-100" alt="Image of the slide-show post"
                                     style="filter: brightness(50%);">
 
@@ -65,15 +65,18 @@
     <section class="mt-3 mt-md-5 d-flex flex-column flex-md-row justify-content-between">
         <% for (postMini of postsMini) { %>
             <article class="col-md-3 mb-2 mt-2 mb-md-0 mt-md-0">
-                <div class="rounded-3">
-                    <img src="<%= postMini.resizeImage(480, 320) %>" class="card-img-top mb-1" alt="...">
-                    <div class="">
+                <div class="rounded-3 d-flex flex-column justify-content-between">
+                    <div style="height: 200px;">
+                        <img src="<%= postMini.image.path %>" class="card-img-top mb-1 h-100" alt="..."
+                            style="object-fit: cover;">
+                    </div>
+                    <div>
                         <span class="text-secondary">
                             <%= postMini.categories.map(category=> category.replace(category.charAt(0),
                                 category.charAt(0).toUpperCase())).join(", ") %>
                         </span>
                         <h5 class="mb-3 mt-1">
-                            <%= postMini.text.substring(0, 60) %> ...
+                            <%= postMini.text.substring(0, 48) %> ...
                         </h5>
                         <div>
                             <a href="/posts/<%= postMini._id %>" class="btn btn-sm btn-outline-primary">Read More</a>

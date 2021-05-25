@@ -89,14 +89,37 @@ module.exports.deletePost = asyncHandler(async (req, res) => {
 // ------- RENDER ------------------->
 
 module.exports.renderIndexPosts = asyncHandler(async (req, res) => {
-  const { category } = req.query;
+  let { category = null, page = 1, limit = 4 } = req.query;
+  // To avoid type coercion. Because from the request object, page is a string.
+  page = parseInt(page);
   let posts;
-  if (category) posts = await Post.find({ categories: category });
-  else posts = await Post.find({});
+  let totalDocs;
+  // Filter posts if there is catogory params.
+  if (category) {
+    posts = await Post.find({ categories: category })
+      .limit(limit * 1)
+      .skip((page - 1) * limit);
+    totalDocs = await Post.countDocuments({ categories: category });
+  } else {
+    posts = await Post.find({})
+      .limit(limit * 1)
+      .skip((page - 1) * limit);
+    totalDocs = await Post.countDocuments();
+  }
+  // Get total pages.
+  const totalPages = Math.ceil(totalDocs / limit);
+  // Create object to pass in rendering.
+  const pagination = {
+    currentPage: page,
+    totalPages,
+    hasNext: page < totalPages,
+    hasPrev: page > 1,
+  };
   res.render("posts/index.ejs", {
     posts,
     category,
     csrfToken: req.csrfToken(),
+    pagination,
   });
 });
 
