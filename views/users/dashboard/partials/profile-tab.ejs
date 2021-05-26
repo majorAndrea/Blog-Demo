@@ -49,7 +49,7 @@
               aria-controls="collapseUserNameEdit">Change</button>
           </div>
           <!-- Edit form -->
-          <div class="collapse mt-3 text-start" id="collapseUserNameEdit">
+          <div class="collapse mt-2 text-start" id="collapseUserNameEdit">
             <form action="/users/<%= signedUser.username %>?_method=PATCH" method="POST"
               class="d-flex flex-column justify-content-center align-items-center">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -76,7 +76,7 @@
               aria-controls="collapseBirthDayEdit">Change</button>
           </div>
           <!-- Edit form -->
-          <div class="collapse mt-3 text-start" id="collapseBirthDayEdit">
+          <div class="collapse mt-2 text-start" id="collapseBirthDayEdit">
             <form action="/users/<%= signedUser.username %>?_method=PATCH" method="POST"
               class="d-flex flex-column justify-content-center align-items-center">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -102,7 +102,7 @@
           <button class="btn btn-secondary btn-sm text-end mt-2 mt-md-0" type="button" data-bs-toggle="collapse"
             data-bs-target="#collapseBioEdit" aria-expanded="false" aria-controls="collapseBioEdit">Change</button>
           <!-- Edit form -->
-          <div class="collapse mt-3 text-start" id="collapseBioEdit">
+          <div class="collapse mt-2 text-start" id="collapseBioEdit">
             <form action="/users/<%= signedUser.username %>?_method=PATCH" method="POST">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <label for="bio" class="form-label text-muted">Write here your Bio:</label>

@@ -9,14 +9,14 @@
                     <a href="<%= path %>" class="link-dark">
                         <%= redirectMsg %>
                     </a>
-                    <% } %>
-                        <hr>
-                        <% if (process.env.NODE_ENV !=="development" ) { %>
-                            <p>
-                                <%= err.stack %>
-                            </p>
-                            <% } %>
-                                <p class="mb-0">If you think there is an error, please contact us.</p>
+                <% } %>
+                <hr>
+                <% if (process.env.NODE_ENV !=="development" ) { %>
+                    <p>
+                        <%= err.stack %>
+                    </p>
+                <% } %>
+                <p class="mb-0">If you think there is an error, please contact us.</p>
             </div>
         </div>
     </div>

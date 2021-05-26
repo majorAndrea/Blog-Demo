@@ -147,7 +147,7 @@
                             <p class="m-0 p-0 mb-1">
                                 <%= post.location.placename %>
                             </p>
-                            <section id='map' style='height: 300px;' class="card"></section>
+                            <section id="map" class="card map-height"></section>
                             <!-- Comments BELOW MAPBOX -->
                             <% if (post.comments && post.comments.length> 0) { %>
                                 <ul class="list-group list-group-flush p-0 mt-4 mt-md-2">
@@ -178,5 +178,5 @@
                                 <% } %>
                         </div>
                         <%- include("../layouts/partials/map.ejs") %>
-                            <% } %>
+                    <% } %>
             </div>

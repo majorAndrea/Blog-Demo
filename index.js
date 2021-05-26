@@ -81,6 +81,7 @@ app.use((req, res, next) => {
   res.locals.tempData = req.session.tempData || null;
   // Delete from the session object the temp data used for the redirect with data.
   req.session.tempData && delete req.session.tempData;
+  console.log(req.path);
   next();
 });
 

@@ -1,0 +1,11 @@
+.posts-height {
+  height: 300px;
+}
+
+.comments-p-height {
+  height: 3rem;
+}
+
+.darker-img {
+  filter: brightness(50%);
+}

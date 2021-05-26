@@ -1,0 +1,8 @@
+.post-div-height {
+  min-height: 280px;
+  max-height: 380px;
+}
+
+.post-img {
+  object-fit: cover;
+}

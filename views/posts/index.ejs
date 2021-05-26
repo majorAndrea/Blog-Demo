@@ -2,8 +2,8 @@
 	<% for (post of posts) { %>
 		<article class="card mb-4 overflow-hidden bg-light shadow">
 			<div class="row g-0">
-				<div class="col-12 col-md-12 col-lg-5 col-xl-4" style="min-height: 280px; max-height: 380px;">
-					<img src="<%= post.image.path %>" alt="Image of the Post" class="w-100 h-100" style="object-fit: cover;">
+				<div class="col-12 col-md-12 col-lg-5 col-xl-4 post-div-height">
+					<img src="<%= post.image.path %>" alt="Image of the Post" class="w-100 h-100 post-img">
 				</div>
 				<section class="col-lg">
 					<div class="card-body d-flex flex-column h-100">
@@ -33,19 +33,18 @@
 			<nav aria-label="Posts page navigation" class="d-flex justify-content-center mt-5">
 				<ul class="pagination">
 					<li class="page-item <%= pagination.hasPrev ? null : " disabled" %>"><a class="page-link" href="<%=category ?
-							`http://localhost:3000/posts?category=${category}&page=${pagination.currentPage -1}` : `http://localhost:3000/posts?page=${pagination.currentPage -1}`
+							`/posts?category=${category}&page=${pagination.currentPage -1}` : `/posts?page=${pagination.currentPage -1}`
 							%>">Prev</a></li>
 					<% for (let i=1; i <=pagination.totalPages; i++) { %>
 						<li class="page-item <%= pagination.currentPage === i ? 'active' : null %>"><a class="page-link"
-								href=<%=category ? `http://localhost:3000/posts?category=${category}&page=${i}` :
-								`http://localhost:3000/posts?page=${i}` %>>
+								href=<%=category ? `/posts?category=${category}&page=${i}` : `/posts?page=${i}` %>>
 								<%= i %>
 							</a></li>
 
 						<% } %>
 							<li class="page-item <%= pagination.hasNext ? null : " disabled" %>"><a class="page-link" href="
 									<%=category ?
-								`http://localhost:3000/posts?category=${category}&page=${pagination.currentPage +1}` : `http://localhost:3000/posts?page=${pagination.currentPage +1}`
+								`/posts?category=${category}&page=${pagination.currentPage +1}` : `/posts?page=${pagination.currentPage +1}`
 								%>">Next</a></li>
 				</ul>
 			</nav>

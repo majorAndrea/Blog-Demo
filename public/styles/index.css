@@ -1,0 +1,11 @@
+.darker-img {
+  filter: brightness(50%);
+}
+
+.mini-post-height {
+  height: 200px;
+}
+
+.mini-post-img {
+  object-fit: cover;
+}

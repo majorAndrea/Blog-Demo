@@ -19,9 +19,9 @@
                 <!-- POSTS LOOP -->
                 <% for (let i=0; i < userPosts.length; i++) { %>
                   <article class="carousel-item <%= i === 0 ? " active" : null %>">
-                    <div style="height: 300px;">
-                      <img src="<%= userPosts[i].image %>" class="d-block w-100 h-100" alt="Image of the Post"
-                        style="filter: brightness(50%);">
+                    <div class="posts-height">
+                      <img src="<%= userPosts[i].image %>" class="d-block w-100 h-100 darker-img"
+                        alt="Image of the Post">
                       <div><a href="/posts/<%=userPosts[i]._id %>"
                           class="btn btn-sm btn-success position-absolute top-0 start-0 m-2">Go
                           to the
@@ -76,8 +76,8 @@
                 <% for (let i=0; i < userComments.length; i++) { %>
                   <section class="carousel-item <%= i === 0 ? " active" : null %>">
                     <div class="border-bottom m-0 pb-3 pb-sm-2 text-start text-sm-center">
-                      <p class="py-2 mb-0 text-break text-wrap overflow-scroll bg-light border rounded border-color-secondary"
-                        style="height: 3rem;">
+                      <p
+                        class="py-2 mb-0 text-break text-wrap overflow-scroll bg-light border border-color-secondary border-end-0 border-start-0 comments-p-height">
                         <%= userComments[i].text.substring(0, 120) %> ...
                       </p>
                       <aside class="mt-3 mt-sm-2">
