@@ -7,7 +7,13 @@
                 <a href="<%= success.path %>" class="link-dark"><%= success.redirectMsg %></a>
             <% } %> 
             <hr>
-            <p class="mb-0">Click the link above to proceed.</p>  
+            <p class="mb-0">Click the link above to proceed. Or you will be automatically redirected within three seconds.</p>  
         </div>
     </div>
 </div>
+
+<script>
+setTimeout(function () {
+  location.href = "<%- success.path %>";
+}, 3000);
+</script>

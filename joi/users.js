@@ -5,6 +5,7 @@ const userValidationSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().escapeHTML().min(3).max(36).required(),
   repeat_password: Joi.ref("password"),
+  profileVisits: Joi.number(),
 })
   .with("password", "repeat_password")
   .required();

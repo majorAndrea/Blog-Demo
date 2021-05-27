@@ -13,7 +13,11 @@ const userSchema = new Schema({
     required: [true, "Email is required!"],
   },
   image: {
-    path: { type: String },
+    path: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/dnymebtck/image/upload/v1616164071/BlogDemo/default-profile-2_z8lutx.png",
+    },
     filename: { type: String },
   },
   bio: {
@@ -25,6 +29,10 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: [true, "Password cannot be blank!"],
+  },
+  profileVisits: {
+    type: Number,
+    default: 0,
   },
 });
 

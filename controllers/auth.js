@@ -90,10 +90,6 @@ class UserAuth {
         username,
         email,
         password,
-        image: {
-          path:
-            "https://res.cloudinary.com/dnymebtck/image/upload/v1616164071/BlogDemo/default-profile-2_z8lutx.png", // Default profile image.
-        },
       });
       await newUser.save();
       this.Auth.Session.setLoggedUserIntoSession(req, res, {
@@ -191,9 +187,8 @@ class Privileges {
           });
         case "user-actions":
         case "user-action":
-          const currentUser = this.Auth.Session.getUserFromSession(
-            req
-          ).username.toLowerCase();
+          const currentUser =
+            this.Auth.Session.getUserFromSession(req).username.toLowerCase();
           const targetUser = req.params.username.toLowerCase();
           if (currentUser === targetUser) {
             return next();

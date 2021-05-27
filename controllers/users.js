@@ -19,9 +19,10 @@ module.exports.renderRegister = (req, res) => {
 };
 
 module.exports.renderDashboard = asyncHandler(async (req, res) => {
+  const currentUser = Auth.Session.getUserFromSession(req);
   const userInfo = await User.findOne(
-    { email: Auth.Session.getUserFromSession(req).email },
-    { bio: 1, birthday: 1, image: 1 }
+    { email: currentUser.email },
+    { bio: 1, birthday: 1, image: 1, profileVisits: 1 }
   );
   const userPosts = await Post.getAllPostsOfUser(req.params.username);
   const userComments = await Comment.getAllCommentsOfUser(req.params.username);
@@ -33,14 +34,24 @@ module.exports.renderDashboard = asyncHandler(async (req, res) => {
     userPosts: userPosts || undefined,
     userComments: userComments || undefined,
     failureMsg: undefined,
+    profileVisits: userInfo.profileVisits,
   });
 });
 
 module.exports.renderProfile = asyncHandler(async (req, res) => {
+  const currentUser = Auth.Session.getUserFromSession(req);
   const userInfo = await User.findOne(
     { username: req.params.username },
-    { username: 1, bio: 1, birthday: 1, image: 1 }
+    { username: 1, bio: 1, birthday: 1, image: 1, profileVisits: 1 }
   );
+  if (currentUser.username !== req.params.username) {
+    if (userInfo.profileVisits) {
+      userInfo.set("profileVisits", parseInt(userInfo.profileVisits) + 1);
+    } else {
+      userInfo.set("profileVisits", 1);
+    }
+    await userInfo.save();
+  }
   res.render("users/profile.ejs", {
     username: userInfo.username,
     userImage: (userInfo.image && userInfo.image.path) || undefined,

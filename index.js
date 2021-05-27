@@ -16,26 +16,29 @@ const authRoutes = require("./routes/users.js");
 const methodOverride = require("method-override");
 const AppError = require("./utils/app-error.js");
 const session = require("express-session");
+const { randomBytes } = require("crypto");
+const secret = randomBytes(16).toString("hex");
 const MongoStore = require("connect-mongo")(session);
 const mongoStore = new MongoStore({
   url: process.env.DB_CONNECTION,
-  secret: "changemeplease",
+  secret,
   touchAfter: 24 * 60 * 60,
 });
+
 const sessionConfig = {
   store: mongoStore,
   name: "live",
-  secret: "changemeplease",
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
     //secure: true,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // Milliseconds, seconds, minutes, hours, daysInWeek.
-    magAge: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7,
   },
 };
-// const helmet = require("helmet");
+const helmet = require("helmet");
 const Auth = require("./controllers/auth.js");
 const Post = require("./models/posts.js");
 const csrf = require("csurf");
@@ -68,6 +71,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(mongoSanitize());
 app.use(methodOverride("_method"));
 app.use(session(sessionConfig));
+app.use(helmet());
 app.use(csrfProtection);
 app.use(contentSecurityPolicy());
 app.use(Auth.Session.startTrackUrl);
@@ -81,7 +85,6 @@ app.use((req, res, next) => {
   res.locals.tempData = req.session.tempData || null;
   // Delete from the session object the temp data used for the redirect with data.
   req.session.tempData && delete req.session.tempData;
-  console.log(req.path);
   next();
 });
 
