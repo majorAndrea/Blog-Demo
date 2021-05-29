@@ -4,8 +4,9 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require("express");
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const DB_CONNECTION = process.env.DB_CONNECTION;
+
 const mongoose = require("mongoose");
 const mongoSanitize = require("express-mongo-sanitize");
 const path = require("path");
