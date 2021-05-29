@@ -30,3 +30,5 @@ I have created my own Auth System... I know I should never create my own Authent
 and I do that just for fun (just like the entire project anyway).
 
 -> I'm updating more this project from time to time.
+
+LIVE VERSION: https://am-blog-demo.herokuapp.com/
