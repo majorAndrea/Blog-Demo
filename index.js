@@ -34,7 +34,10 @@ const sessionConfig = {
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
-    //secure: true,
+    secure: (() => {
+      if (process.env.NODE_ENV !== "PRODUCTION") return false;
+      return true;
+    })(),
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // Milliseconds, seconds, minutes, hours, daysInWeek.
     maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7,
   },
