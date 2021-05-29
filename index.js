@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV !== "PRODUCTION") {
+if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
@@ -35,7 +35,7 @@ const sessionConfig = {
   cookie: {
     httpOnly: true,
     secure: (() => {
-      if (process.env.NODE_ENV !== "PRODUCTION") {
+      if (process.env.NODE_ENV !== "production") {
         return false;
       }
       app.set("trust proxy", 1);
