@@ -35,7 +35,10 @@ const sessionConfig = {
   cookie: {
     httpOnly: true,
     secure: (() => {
-      if (process.env.NODE_ENV !== "PRODUCTION") return false;
+      if (process.env.NODE_ENV !== "PRODUCTION") {
+        return false;
+      }
+      app.set("trust proxy", 1);
       return true;
     })(),
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // Milliseconds, seconds, minutes, hours, daysInWeek.
