@@ -13,6 +13,7 @@
     "@mapbox/mapbox-sdk": "^0.12.1",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.24.0",
+    "compression": "^1.7.4",
     "connect-mongo": "^3.2.0",
     "csurf": "^1.11.0",
     "dotenv": "^8.2.0",
