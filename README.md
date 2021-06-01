@@ -26,7 +26,7 @@ Tech used:
 - Others...
 
 SIDE-NOTE:
-I have created my own Auth System... I know I should never create my own Authentication and Authorization system, but this is not a production project
+I have created my own Auth System... I know I should never create my own Authentication system, but this is not a production project
 and I do that just for fun (just like the entire project anyway).
 
 -> I'm updating more this project from time to time.
