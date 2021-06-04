@@ -3,11 +3,11 @@
 My first full-stack webdev RESTFul project.
 
 Main features:
-- Users can publicate Posts within various categories.
-- Users can comment Posts.
-- Users have their profiles and dashboard and they can edit their biography, avatar image, birthdate and username.
-- Posts can have a "Location" Field with some places and in the Post show page will appear a mini-map displaying the geolocated position.
-- Others small features...
+- Users can publish Posts within various categories.
+- Users can comment on Posts.
+- Users have their profiles and dashboard and they can edit their biography, avatar image, birth date, and username.
+- Posts can optionally have a "Location" field and if the user writes some real-world place (like "New York") then on the Post show page will appear a mini-map displaying the geolocated position.
+- Other small features...
 
 Tech used:
 - Node.js
