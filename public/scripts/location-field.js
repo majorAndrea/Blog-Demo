@@ -6,23 +6,21 @@
   const locationLi = document.querySelector("#location-li");
 
   const enableInput = () => {
-    locField.classList.toggle("d-none");
+    locField.classList.remove("d-none");
     locFieldInput.removeAttribute("disabled", null);
     locFieldInput.setAttribute("required", null);
-    locationLi.classList.toggle("d-none");
+    locationLi.classList.remove("d-none");
   };
   const disableInput = () => {
-    locField.classList.toggle("d-none");
+    locField.classList.add("d-none");
     locFieldInput.setAttribute("disabled", null);
     locFieldInput.removeAttribute("required", null);
-    locationLi.classList.toggle("d-none");
+    locationLi.classList.add("d-none");
   };
 
+  placesCheckbox.checked ? enableInput() : disableInput();
+
   placesCheckbox.addEventListener("input", function () {
-    if (this.checked) {
-      enableInput();
-    } else {
-      disableInput();
-    }
+    placesCheckbox.checked ? enableInput() : disableInput();
   });
 })();

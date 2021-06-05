@@ -36,7 +36,7 @@ const geocode = asyncHandler(async (req, res, next) => {
       next({
         status: 422,
         message:
-          "The location you entered does not exists, please choose another one or don't use the location field!",
+          "The location you entered does not exists, please choose another one or do not use the location field!",
         redirectInfo,
       });
     }

@@ -53,7 +53,7 @@ const csrf = require("csurf");
 const csrfProtection = csrf();
 const contentSecurityPolicy = require("./utils/content-security-policy.js");
 
-// MONGO-DB SETUP --------------------------> mongodb://localhost:27017/blogDB
+// MONGO-DB SETUP -------------------------->
 
 mongoose
   .connect(DB_CONNECTION, {

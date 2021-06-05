@@ -12,22 +12,20 @@
                     aria-label="Slide 3"></button>
             </div>
             <div class="carousel-inner">
-                <!-- TODO: Convert this to standard for loop. -->
-                <% let isFirst=true; %>
                     <!-- Carousel articles -->
-                    <% for (postCarousel of postsCarousel) { %>
-                        <article class="carousel-item <%= isFirst ? " active" : "" %>">
-                            <% isFirst=false; %>
-                                <img src="<%= postCarousel.resizeImage(1280, 720) %>"
+                    <% for (let i = 0; i < postsCarousel.length; i++) { %>
+                        <article class="carousel-item <%= i === 0 ? " active" : "" %>" data-postUrl=<%= postsCarousel[i]._id %> >
+
+                                <img src="<%= postsCarousel[i].resizeImage(1280, 720) %>"
                                     class="d-block border rounded w-100 h-100 darker-img"
                                     alt="Image of the slide-show post">
 
                                 <div class="carousel-caption">
                                     <h4>
-                                        <%= postCarousel.title %>
+                                        <%= postsCarousel[i].title %>
                                     </h4>
                                     <p class="d-none d-md-block">
-                                        <%= postCarousel.text.substring(0, 120) %>...
+                                        <%= postsCarousel[i].text.substring(0, 120) %>...
                                     </p>
                                 </div>
                         </article>
@@ -80,7 +78,7 @@
                         <%= postMini.text.substring(0, 48) %> ...
                     </h5>
                     <div>
-                        <a href="/posts/<%= postMini._id %>" class="btn btn-sm btn-outline-primary">Read More</a>
+                        <a href="/posts/<%= postMini._id %>" class="btn btn-sm btn-outline-primary" tabindex="0">Read More</a>
                     </div>
                 </div>
             </div>
