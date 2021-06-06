@@ -30,6 +30,7 @@ I have created my own Auth System... I know I should never create my own Authent
 and I do that just for fun (just like the entire project anyway).
 
 LIVE VERSION: https://am-blog-demo.herokuapp.com/
+(It may take a while to load because the project is hosted on a free plan)
 
 Testing Credentials:
   - Email: test@test.com
