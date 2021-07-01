@@ -16,8 +16,8 @@
                     <% for (let i = 0; i < postsCarousel.length; i++) { %>
                         <article class="carousel-item <%= i === 0 ? " active" : "" %>" data-postUrl=<%= postsCarousel[i]._id %> >
 
-                                <img src="<%= postsCarousel[i].resizeImage(1280, 720) %>"
-                                    class="d-block border rounded w-100 h-100 darker-img"
+                                <img src="<%= postsCarousel[i].resizeImage(1280, 780) %>"
+                                    class="d-block border rounded w-100 h-100 carousel-img"
                                     alt="Image of the slide-show post">
 
                                 <div class="carousel-caption">

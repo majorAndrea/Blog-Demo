@@ -1,5 +1,6 @@
-.darker-img {
-  filter: brightness(50%);
+.carousel-img {
+  filter: brightness(55%);
+  object-fit: cover;
 }
 
 .mini-post-height {
