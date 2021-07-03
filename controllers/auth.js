@@ -1,6 +1,7 @@
 const User = require("../models/users.js");
 const Post = require("../models/posts.js");
 const Comment = require("../models/comments.js");
+const Mail = require("../mailer/index.js");
 const asyncHandler = require("../utils/async-handler.js");
 
 class Auth {
