@@ -12,6 +12,8 @@ const upload = multer({ storage });
 
 router.get("/login", users.renderLogin);
 
+router.get("/begin_password_reset", users.renderBeginPasswordReset);
+
 // --- USER DASHBOARD -------------------------
 router.get(
   "/:username/dashboard",
@@ -37,9 +39,15 @@ router.get(
   users.renderProfile
 );
 
+// ---------------------------------------------
+
 router.post("/login", users.loginUser);
 
 router.post("/logout", users.logoutUser);
+
+router.post("/begin_password_reset", users.beginPasswordReset);
+
+router.post("/register", validateUser, users.registerUser);
 
 // --- USER UPDATE PROFILE ---------------------
 router.patch(
@@ -55,7 +63,5 @@ router.patch(
   validateUserUpdate,
   users.updateUser
 );
-
-router.post("/register", validateUser, users.registerUser);
 
 module.exports = router;

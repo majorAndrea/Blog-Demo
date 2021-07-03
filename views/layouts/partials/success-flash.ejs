@@ -1,0 +1,8 @@
+<% if (successMsg && Object.values(successMsg).length> 0) { %>
+  <div class="alert alert-success d-flex justify-content-between col-12 col-lg-6 offset-lg-3" role="alert">
+    <p class="p-0 m-0">
+      <%= successMsg %>
+    </p>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <% } %>

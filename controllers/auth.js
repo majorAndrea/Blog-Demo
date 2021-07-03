@@ -1,7 +1,10 @@
 const User = require("../models/users.js");
 const Post = require("../models/posts.js");
 const Comment = require("../models/comments.js");
-const Mail = require("../mailer/index.js");
+const Email = require("../mailer/index.js");
+const { randomBytes } = require("crypto");
+const { promisify } = require("util");
+const asyncRandomBytes = promisify(randomBytes);
 const asyncHandler = require("../utils/async-handler.js");
 
 class Auth {
@@ -129,6 +132,37 @@ class UserAuth {
         res.redirect(failureRedirect);
       }
     };
+  }
+
+  beginPasswordReset({
+    successMsg = "If an user exists with this email, then we will send an email with an url to reset the password.",
+  } = {}) {
+    return asyncHandler(async (req, res) => {
+      const { emailOfPasswordToReset } = req.body;
+      const userFound = await User.findOne({ email: emailOfPasswordToReset });
+      if (userFound) {
+        asyncRandomBytes(16).then(async (buffer) => {
+          const resetPswToken = buffer.toString("hex");
+          const tokenExpireDateMs = Date.now() + 1_800_000;
+          userFound.resetPasswordToken = resetPswToken;
+          userFound.resetPasswordTokenExpireDate = tokenExpireDateMs;
+          await userFound.save();
+          const emailResetPsw = new Email({
+            to: emailOfPasswordToReset,
+            subject: "Request of password reset - BlogDemo",
+          });
+          emailResetPsw
+            .applyResetPswTemplateToBody({
+              generatedToken: resetPswToken,
+              tokenExpireMs: 1_800_000,
+            })
+            .sendEmail();
+        });
+      }
+      res.status(200).render("users/begin-password-reset.ejs", {
+        successMsg,
+      });
+    });
   }
 }
 

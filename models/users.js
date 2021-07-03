@@ -34,6 +34,12 @@ const userSchema = new Schema({
     type: Number,
     default: 0,
   },
+  resetPasswordToken: {
+    type: String,
+  },
+  resetPasswordTokenExpireDate: {
+    type: Date,
+  },
 });
 
 userSchema.statics.validateCredentials = async function (email, password) {

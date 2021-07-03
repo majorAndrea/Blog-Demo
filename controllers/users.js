@@ -18,6 +18,15 @@ module.exports.renderRegister = (req, res) => {
   });
 };
 
+module.exports.renderBeginPasswordReset = (req, res) => {
+  res.render("users/begin-password-reset.ejs", {
+    csrfToken: req.csrfToken(),
+    successMsg: undefined,
+  });
+};
+
+module.exports.beginPasswordReset = Auth.UserAuth.beginPasswordReset();
+
 module.exports.renderDashboard = asyncHandler(async (req, res) => {
   const currentUser = Auth.Session.getUserFromSession(req);
   const userInfo = await User.findOne(

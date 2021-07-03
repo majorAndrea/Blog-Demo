@@ -11,8 +11,8 @@ const transporter = nodemailer.createTransport(
   })
 );
 
-class Mail {
-  constructor({ to, from = DEFAULT_EMAIL, subject, body }) {
+class Email {
+  constructor({ to = "", from = DEFAULT_EMAIL, subject = "", body = "" }) {
     this.to = to;
     this.from = from;
     this.subject = subject;
@@ -28,10 +28,43 @@ class Mail {
     ) {
       return true;
     }
-    return false;
+    const missingFields = [
+      [this.to, "to"],
+      [this.from, "from"],
+      [this.subject, "subject"],
+      [this.body, "body"],
+    ]
+      .map((param) => {
+        if (param[0].length === 0) {
+          return param[1];
+        }
+        return;
+      })
+      .join(" ")
+      .trim();
+
+    throw new Error(`Email is missing these fields: ${missingFields}`);
   }
 
-  sendMail() {
+  applyResetPswTemplateToBody({ generatedToken, tokenExpireMs }) {
+    const url =
+      process.env.NODE_ENV !== "production"
+        ? `http://localhost:${process.env.PORT}/users/reset_password/${generatedToken}`
+        : `${process.env.BLOG_DEMO_URL}/users/reset_password/${generatedToken}`;
+
+    this.body = `
+      <h1>You have requested a password reset</h1>
+
+      <h3>Your link to reset the password:</h3>
+      <a href="${url}" >Click here to reset the password</a>
+      
+      <p>Your token will expire within ${tokenExpireMs / 1000 / 60} minutes.</p>
+    `;
+
+    return this;
+  }
+
+  sendEmail() {
     if (this.#checkFieldsValidity()) {
       return transporter.sendMail({
         to: this.to,
@@ -43,4 +76,4 @@ class Mail {
   }
 }
 
-module.exports = Mail;
+module.exports = Email;
