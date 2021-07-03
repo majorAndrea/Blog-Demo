@@ -25,7 +25,35 @@ module.exports.renderBeginPasswordReset = (req, res) => {
   });
 };
 
+module.exports.renderPasswordReset = asyncHandler(async (req, res, next) => {
+  const { token } = req.params;
+  const userFound = await User.findOne(
+    {
+      resetPasswordToken: token,
+      resetPasswordTokenExpireDate: { $gt: Date.now() },
+    },
+    { username: 1 }
+  );
+  if (userFound) {
+    return res.render("users/password-reset.ejs", {
+      csrfToken: req.csrfToken(),
+      token,
+      username: userFound.username,
+    });
+  }
+  next({
+    status: 410,
+    message:
+      "Your reset password token is invalid or has been expired. If you need to reset your password please try again.",
+    redirectInfo: {
+      path: "/",
+    },
+  });
+});
+
 module.exports.beginPasswordReset = Auth.UserAuth.beginPasswordReset();
+
+module.exports.updateUserPassword = Auth.UserAuth.updateUserPassword();
 
 module.exports.renderDashboard = asyncHandler(async (req, res) => {
   const currentUser = Auth.Session.getUserFromSession(req);

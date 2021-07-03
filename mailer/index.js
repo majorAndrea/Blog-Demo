@@ -19,7 +19,7 @@ class Email {
     this.body = body;
   }
 
-  #checkFieldsValidity() {
+  #checkEmailFieldsValidity() {
     if (
       this.to.length > 0 &&
       this.from.length > 0 &&
@@ -49,15 +49,15 @@ class Email {
   applyResetPswTemplateToBody({ generatedToken, tokenExpireMs }) {
     const url =
       process.env.NODE_ENV !== "production"
-        ? `http://localhost:${process.env.PORT}/users/reset_password/${generatedToken}`
-        : `${process.env.BLOG_DEMO_URL}/users/reset_password/${generatedToken}`;
+        ? `http://localhost:${process.env.PORT}/users/password_reset/${generatedToken}`
+        : `${process.env.BLOG_DEMO_URL}/users/password_reset/${generatedToken}`;
 
     this.body = `
       <h1>You have requested a password reset</h1>
 
       <h3>Your link to reset the password:</h3>
       <a href="${url}" >Click here to reset the password</a>
-      
+
       <p>Your token will expire within ${tokenExpireMs / 1000 / 60} minutes.</p>
     `;
 
@@ -65,7 +65,7 @@ class Email {
   }
 
   sendEmail() {
-    if (this.#checkFieldsValidity()) {
+    if (this.#checkEmailFieldsValidity()) {
       return transporter.sendMail({
         to: this.to,
         from: this.from,

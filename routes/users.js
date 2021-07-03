@@ -14,6 +14,8 @@ router.get("/login", users.renderLogin);
 
 router.get("/begin_password_reset", users.renderBeginPasswordReset);
 
+router.get("/password_reset/:token", users.renderPasswordReset);
+
 // --- USER DASHBOARD -------------------------
 router.get(
   "/:username/dashboard",
@@ -63,5 +65,7 @@ router.patch(
   validateUserUpdate,
   users.updateUser
 );
+
+router.patch("/:username/reset_password", users.updateUserPassword);
 
 module.exports = router;

@@ -7,6 +7,8 @@ const { promisify } = require("util");
 const asyncRandomBytes = promisify(randomBytes);
 const asyncHandler = require("../utils/async-handler.js");
 
+const RESET_PASSWORD_TOKEN_EXPIRATION_MS = 1_800_000;
+
 class Auth {
   constructor() {
     this.Session = Object.freeze(new Session(this));
@@ -139,11 +141,15 @@ class UserAuth {
   } = {}) {
     return asyncHandler(async (req, res) => {
       const { emailOfPasswordToReset } = req.body;
-      const userFound = await User.findOne({ email: emailOfPasswordToReset });
+      const userFound = await User.findOne(
+        { email: emailOfPasswordToReset },
+        { username: 1 }
+      );
       if (userFound) {
         asyncRandomBytes(16).then(async (buffer) => {
           const resetPswToken = buffer.toString("hex");
-          const tokenExpireDateMs = Date.now() + 1_800_000;
+          const tokenExpireDateMs =
+            Date.now() + RESET_PASSWORD_TOKEN_EXPIRATION_MS;
           userFound.resetPasswordToken = resetPswToken;
           userFound.resetPasswordTokenExpireDate = tokenExpireDateMs;
           await userFound.save();
@@ -154,13 +160,47 @@ class UserAuth {
           emailResetPsw
             .applyResetPswTemplateToBody({
               generatedToken: resetPswToken,
-              tokenExpireMs: 1_800_000,
+              tokenExpireMs: RESET_PASSWORD_TOKEN_EXPIRATION_MS,
             })
             .sendEmail();
         });
       }
       res.status(200).render("users/begin-password-reset.ejs", {
         successMsg,
+      });
+    });
+  }
+
+  updateUserPassword({ successRedirect, successMsg } = {}) {
+    return asyncHandler(async (req, res) => {
+      const { token } = req.query;
+      const { password } = req.body.user;
+      const userFound = await User.findOne({
+        resetPasswordToken: token,
+        resetPasswordTokenExpireDate: { $gt: Date.now() },
+      });
+      if (userFound) {
+        userFound.password = password;
+        userFound.resetPasswordToken = "";
+        userFound.resetPasswordTokenExpireDate = Date.now(); // To expire reset password token.
+        await userFound.save();
+        const success = {
+          path: successRedirect || "/",
+          message:
+            successMsg ||
+            `${userFound.username} you have correctly changed your password. Now you can log in with your new password.`,
+          redirectMsg: "Click here to continue.",
+        };
+        res.location(success.path);
+        return res.status(200).render("success.ejs", { success });
+      }
+      next({
+        status: 410,
+        message:
+          "Your reset password token is invalid or has been expired. If you need to reset your password please try again.",
+        redirectInfo: {
+          path: "/",
+        },
       });
     });
   }
