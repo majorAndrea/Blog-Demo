@@ -6,6 +6,7 @@ Main features:
 - Users can publish Posts within various categories.
 - Users can comment on Posts.
 - Users have their own profiles and dashboard and they can edit their biography, avatar image, birth date, and username.
+- Users can reset their password if forgotten (via email API).
 - Posts can optionally have a "Location" field and if the user writes some real-world place (like "New York") then on the Post show page will appear a mini-map displaying the geolocated position.
 - Other small features...
 
@@ -17,6 +18,7 @@ Tech used:
 - Bootstrap
 - EJS and some npm packages related to EJS
 - Cloudinary API & Multer
+- Nodemailer & SendGrid API
 - MapBox API
 - CSFR Tokens
 - JOI Validation
@@ -26,8 +28,7 @@ Tech used:
 - Others...
 
 SIDE-NOTE:
-I have created my own Auth System... I know I should never create my own Authentication system, but this is not a production project
-and I do that just for fun (just like the entire project anyway).
+I have created my own Auth System... I know is bad to create my own Authentication and Authorization system from a security standpoint, but this is not a production project and I do that just for fun (like the entire project anyway).
 
 LIVE VERSION: https://am-blog-demo.herokuapp.com/
 
