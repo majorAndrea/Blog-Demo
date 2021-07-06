@@ -22,6 +22,14 @@ class Session {
     this.Auth = auth;
   }
 
+  deleteUserFromSession(req) {
+    if (req.session) {
+      req.session.destroy();
+      return true;
+    }
+    return false;
+  }
+
   setLoggedUserIntoSession(req, res, { id, username, email, ...otherProps }) {
     req.session.userInfo = {
       id,
@@ -29,10 +37,6 @@ class Session {
       email,
       ...otherProps,
     };
-  }
-
-  deleteUserFromSession(req) {
-    req.session.userInfo ? delete req.session.userInfo : null;
   }
 
   getUserFromSession(req) {
