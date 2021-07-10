@@ -26,19 +26,16 @@ module.exports.renderBeginPasswordReset = (req, res) => {
 };
 
 module.exports.renderPasswordReset = asyncHandler(async (req, res, next) => {
-  const { token } = req.params;
-  const userFound = await User.findOne(
-    {
-      resetPasswordToken: token,
-      resetPasswordTokenExpireDate: { $gt: Date.now() },
-    },
-    { username: 1 }
-  );
+  const { token, username } = req.params;
+  const userFound = await User.findOne({
+    resetPasswordToken: token,
+    resetPasswordTokenExpireDate: { $gt: Date.now() },
+  });
   if (userFound) {
     return res.render("users/password-reset.ejs", {
       csrfToken: req.csrfToken(),
       token,
-      username: userFound.username,
+      username,
     });
   }
   next({

@@ -165,6 +165,7 @@ class UserAuth {
             .applyResetPswTemplateToBody({
               generatedToken: resetPswToken,
               tokenExpireMs: RESET_PASSWORD_TOKEN_EXPIRATION_MS,
+              username: userFound.username,
             })
             .sendEmail();
         });

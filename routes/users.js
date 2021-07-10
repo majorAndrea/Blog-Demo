@@ -14,7 +14,7 @@ router.get("/login", users.renderLogin);
 
 router.get("/begin_password_reset", users.renderBeginPasswordReset);
 
-router.get("/password_reset/:token", users.renderPasswordReset);
+router.get("/:username/password_reset/token/:token", users.renderPasswordReset);
 
 // --- USER DASHBOARD -------------------------
 router.get(
