@@ -49,8 +49,8 @@ class Email {
   applyResetPswTemplateToBody({ generatedToken, tokenExpireMs, username }) {
     const url =
       process.env.NODE_ENV !== "production"
-        ? `http://localhost:${process.env.PORT}/users/${username}/password_reset/token/${generatedToken}`
-        : `${process.env.BLOG_DEMO_URL}/users/${username}/password_reset/token/${generatedToken}`;
+        ? `http://localhost:${process.env.PORT}/users/${username}/password_reset?token=${generatedToken}`
+        : `${process.env.BLOG_DEMO_URL}/users/${username}/password_reset?token=${generatedToken}`;
 
     this.body = `
       <h1>You have requested a password reset</h1>

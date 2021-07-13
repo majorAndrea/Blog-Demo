@@ -26,7 +26,8 @@ module.exports.renderBeginPasswordReset = (req, res) => {
 };
 
 module.exports.renderPasswordReset = asyncHandler(async (req, res, next) => {
-  const { token, username } = req.params;
+  const { username } = req.params;
+  const { token } = req.query;
   const userFound = await User.findOne({
     resetPasswordToken: token,
     resetPasswordTokenExpireDate: { $gt: Date.now() },
