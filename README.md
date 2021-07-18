@@ -6,7 +6,7 @@ Main features:
 - Users can publish Posts within various categories.
 - Users can comment on Posts.
 - Users have their own profiles and dashboard and they can edit their biography, avatar image, birth date, and username.
-- Users can reset their password if forgotten (via email API).
+- Users can reset their password if forgotten (via a link with a random reset token generated from the backend and sent to the user email).
 - Posts can optionally have a "Location" field and if the user writes some real-world place (like "New York") then on the Post show page will appear a mini-map displaying the geolocated position.
 - Other small features...
 
