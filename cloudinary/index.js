@@ -1,6 +1,6 @@
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
-const mimeTypesWhiteList = ["image/png", "image/jpeg", "image/jpg"];
+const mimeTypesWhiteList = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
