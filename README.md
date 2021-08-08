@@ -35,5 +35,5 @@ LIVE VERSION: https://am-blog-demo.herokuapp.com/
 (It may take a while to load because the project is hosted on a free plan)
 
 Testing Credentials:
-  - Email: test@test.com
+  - Email: blog-demo@gmail.com
   - Password: password
