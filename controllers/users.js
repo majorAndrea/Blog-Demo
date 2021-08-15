@@ -5,6 +5,8 @@ const Comment = require("../models/comments.js");
 const asyncHandler = require("../utils/async-handler.js");
 
 module.exports.renderLogin = (req, res) => {
+  if (Auth.Session.getUserFromSession(req)) return res.redirect("/");
+
   res.render("users/login.ejs", {
     csrfToken: req.csrfToken(),
     failureMsg: undefined,
@@ -12,6 +14,8 @@ module.exports.renderLogin = (req, res) => {
 };
 
 module.exports.renderRegister = (req, res) => {
+  if (Auth.Session.getUserFromSession(req)) return res.redirect("/");
+
   res.render("users/register.ejs", {
     csrfToken: req.csrfToken(),
     failureMsg: undefined,
@@ -19,6 +23,8 @@ module.exports.renderRegister = (req, res) => {
 };
 
 module.exports.renderBeginPasswordReset = (req, res) => {
+  if (Auth.Session.getUserFromSession(req)) return res.redirect("/");
+
   res.render("users/begin-password-reset.ejs", {
     csrfToken: req.csrfToken(),
     successMsg: undefined,
