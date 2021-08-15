@@ -18,7 +18,9 @@ const methodOverride = require("method-override");
 const AppError = require("./utils/app-error.js");
 const session = require("express-session");
 const compression = require("compression");
-const { randomBytes } = require("crypto");
+const {
+  randomBytes
+} = require("crypto");
 const secret = randomBytes(16).toString("hex");
 const MongoStore = require("connect-mongo")(session);
 const mongoStore = new MongoStore({
@@ -75,7 +77,9 @@ app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use("/static", express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+  extended: true
+}));
 app.use(compression());
 app.use(mongoSanitize());
 app.use(methodOverride("_method"));
@@ -83,7 +87,7 @@ app.use(session(sessionConfig));
 app.use(helmet());
 app.use(csrfProtection);
 app.use(contentSecurityPolicy());
-app.use(Auth.Session.startTrackUrl);
+app.use(Auth.Session.startTrackUrl());
 
 // Setting some things in this middleware.
 app.use((req, res, next) => {
@@ -101,7 +105,10 @@ app.use((req, res, next) => {
 app.get(["/", "/home"], async (req, res) => {
   const postsCarousel = await Post.find({}).limit(3).sort("-createdAt");
   const postsMini = await Post.find({}).limit(3).sort("createdAt");
-  res.render("index.ejs", { postsCarousel, postsMini });
+  res.render("index.ejs", {
+    postsCarousel,
+    postsMini
+  });
 });
 app.use("/users", authRoutes);
 app.use("/posts", postsRoutes);
@@ -110,9 +117,13 @@ app.use("/posts/:id/comments", commentsRoutes);
 // ERRORS HANDLING ------------------------->
 
 app.all("*", (req, res, next) => {
-  next({ status: 404, message: "Content not Found!" });
+  next({
+    status: 404,
+    message: "Content not Found!"
+  });
 });
 
+//eslint-disable-next-line
 app.use((err, req, res, next) => {
   if (err.code === "EBADCSRFTOKEN") {
     return res.redirect("/");

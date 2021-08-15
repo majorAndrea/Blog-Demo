@@ -2,8 +2,12 @@ const User = require("../models/users.js");
 const Post = require("../models/posts.js");
 const Comment = require("../models/comments.js");
 const Email = require("../mailer/index.js");
-const { randomBytes } = require("crypto");
-const { promisify } = require("util");
+const {
+  randomBytes
+} = require("crypto");
+const {
+  promisify
+} = require("util");
 const asyncRandomBytes = promisify(randomBytes);
 const asyncHandler = require("../utils/async-handler.js");
 
@@ -30,7 +34,12 @@ class Session {
     return false;
   }
 
-  setLoggedUserIntoSession(req, res, { id, username, email, ...otherProps }) {
+  setLoggedUserIntoSession(req, res, {
+    id,
+    username,
+    email,
+    ...otherProps
+  }) {
     req.session.userInfo = {
       id,
       username,
@@ -43,16 +52,18 @@ class Session {
     return req.session.userInfo ? req.session.userInfo : null;
   }
 
-  startTrackUrl = (req, res, next) => {
-    if (!req.path.includes("register") && !req.path.includes("login")) {
-      if (!!!this.getUserFromSession(req)) {
-        req.session.url = req.originalUrl;
-      } else {
-        req.session.url ? delete req.session.url : null;
+  startTrackUrl() {
+    return (req, res, next) => {
+      if (!req.path.includes("register") && !req.path.includes("login")) {
+        if (!this.getUserFromSession(req)) {
+          req.session.url = req.originalUrl;
+        } else {
+          req.session.url ? delete req.session.url : null;
+        }
       }
+      next();
     }
-    next();
-  };
+  }
 
   getTrackUrl(req) {
     return req.session.url ? req.session.url : "/";
@@ -70,7 +81,10 @@ class UserAuth {
     failureMsg = undefined,
   } = {}) {
     return asyncHandler(async (req, res) => {
-      const { email, password } = req.body.user;
+      const {
+        email,
+        password
+      } = req.body.user;
       const foundUser = await User.validateCredentials(email, password);
       if (foundUser) {
         this.Auth.Session.setLoggedUserIntoSession(req, res, {
@@ -84,18 +98,32 @@ class UserAuth {
           redirectMsg: "Click here to redirect you back",
         };
         res.location(success.path);
-        res.status(200).render("success.ejs", { success });
+        res.status(200).render("success.ejs", {
+          success
+        });
       } else {
         res
           .status(401)
-          .render("users/login.ejs", { failureMsg, tempData: { email } });
+          .render("users/login.ejs", {
+            failureMsg,
+            tempData: {
+              email
+            }
+          });
       }
     });
   }
 
-  register({ successRedirect = undefined, successMsg = undefined } = {}) {
+  register({
+    successRedirect = undefined,
+    successMsg = undefined
+  } = {}) {
     return asyncHandler(async (req, res) => {
-      const { email, username, password } = req.body.user;
+      const {
+        email,
+        username,
+        password
+      } = req.body.user;
       const newUser = new User({
         username,
         email,
@@ -109,23 +137,27 @@ class UserAuth {
       });
       const success = {
         path: this.Auth.Session.getTrackUrl(req) || successRedirect || "/",
-        message:
-          successMsg ||
+        message: successMsg ||
           `Welcome ${username}, you are now successfully registered!`,
         redirectMsg: "Click here to redirect you back.",
       };
       res.location(success.path);
-      res.status(201).render("success.ejs", { success });
+      res.status(201).render("success.ejs", {
+        success
+      });
     });
   }
 
-  logout({ successRedirect, successMsg, failureRedirect } = {}) {
+  logout({
+    successRedirect,
+    successMsg,
+    failureRedirect
+  } = {}) {
     return (req, res) => {
       if (this.Auth.Session.getUserFromSession(req)) {
         const success = {
           path: successRedirect || "/",
-          message:
-            successMsg ||
+          message: successMsg ||
             `See you soon ${
               this.Auth.Session.getUserFromSession(req).username || ""
             }, you are now logged out!`,
@@ -133,7 +165,9 @@ class UserAuth {
         };
         this.Auth.Session.deleteUserFromSession(req);
         res.location(success.path);
-        res.status(200).render("success.ejs", { success });
+        res.status(200).render("success.ejs", {
+          success
+        });
       } else {
         res.redirect(failureRedirect);
       }
@@ -144,11 +178,14 @@ class UserAuth {
     successMsg = "If an user exists with this email, then we will send an email with an url to reset the password.",
   } = {}) {
     return asyncHandler(async (req, res) => {
-      const { emailOfPasswordToReset } = req.body;
-      const userFound = await User.findOne(
-        { email: emailOfPasswordToReset },
-        { username: 1 }
-      );
+      const {
+        emailOfPasswordToReset
+      } = req.body;
+      const userFound = await User.findOne({
+        email: emailOfPasswordToReset
+      }, {
+        username: 1
+      });
       if (userFound) {
         asyncRandomBytes(16).then(async (buffer) => {
           const resetPswToken = buffer.toString("hex");
@@ -176,13 +213,22 @@ class UserAuth {
     });
   }
 
-  updateUserPassword({ successRedirect, successMsg } = {}) {
-    return asyncHandler(async (req, res) => {
-      const { token } = req.query;
-      const { password } = req.body.user;
+  updateUserPassword({
+    successRedirect,
+    successMsg
+  } = {}) {
+    return asyncHandler(async (req, res, next) => {
+      const {
+        token
+      } = req.query;
+      const {
+        password
+      } = req.body.user;
       const userFound = await User.findOne({
         resetPasswordToken: token,
-        resetPasswordTokenExpireDate: { $gt: Date.now() },
+        resetPasswordTokenExpireDate: {
+          $gt: Date.now()
+        },
       });
       if (userFound) {
         userFound.password = password;
@@ -191,18 +237,18 @@ class UserAuth {
         await userFound.save();
         const success = {
           path: successRedirect || "/",
-          message:
-            successMsg ||
+          message: successMsg ||
             `${userFound.username} you have correctly changed your password. Now you can log in with your new password.`,
           redirectMsg: "Click here to continue.",
         };
         res.location(success.path);
-        return res.status(200).render("success.ejs", { success });
+        return res.status(200).render("success.ejs", {
+          success
+        });
       }
       next({
         status: 410,
-        message:
-          "Your reset password token is invalid or has been expired. If you need to reset your password please try again.",
+        message: "Your reset password token is invalid or has been expired. If you need to reset your password please try again.",
         redirectInfo: {
           path: "/",
         },
@@ -225,7 +271,9 @@ class Privileges {
         return next({
           status: 401,
           message: failureMsg,
-          redirectInfo: { path: failureRedirect || "/users/login" },
+          redirectInfo: {
+            path: failureRedirect || "/users/login"
+          },
         });
       }
       next();
@@ -233,14 +281,18 @@ class Privileges {
   }
 
   isAuthorized(
-    sourceToAccess,
-    { failureMsg = undefined, failureRedirect = undefined } = {}
+    sourceToAccess, {
+      failureMsg = undefined,
+      failureRedirect = undefined
+    } = {}
   ) {
     return asyncHandler(async (req, res, next) => {
-      const { id: userId } = this.Auth.Session.getUserFromSession(req);
+      const {
+        id: userId
+      } = this.Auth.Session.getUserFromSession(req);
       switch (sourceToAccess.toLowerCase()) {
         case "post":
-        case "posts":
+        case "posts": {
           const post = await Post.findById(req.params.id);
           if (post.author._id.equals(userId)) {
             return next();
@@ -252,8 +304,9 @@ class Privileges {
               path: failureRedirect || `/posts/${req.params.id}`,
             },
           });
+        }
         case "comment":
-        case "comments":
+        case "comments": {
           const comment = await Comment.findById(req.params.commentId);
           if (comment.author._id.equals(userId)) {
             return next();
@@ -265,8 +318,9 @@ class Privileges {
               path: failureRedirect || `/posts/${req.params.id}`,
             },
           });
+        }
         case "user-actions":
-        case "user-action":
+        case "user-action": {
           const currentUser =
             this.Auth.Session.getUserFromSession(req).username.toLowerCase();
           const targetUser = req.params.username.toLowerCase();
@@ -280,7 +334,7 @@ class Privileges {
               path: failureRedirect || "/",
             },
           });
-        //;
+        }
       }
     });
   }
