@@ -18,9 +18,7 @@ const methodOverride = require("method-override");
 const AppError = require("./utils/app-error.js");
 const session = require("express-session");
 const compression = require("compression");
-const {
-  randomBytes
-} = require("crypto");
+const { randomBytes } = require("crypto");
 const secret = randomBytes(16).toString("hex");
 const MongoStore = require("connect-mongo")(session);
 const mongoStore = new MongoStore({
@@ -77,9 +75,11 @@ app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use("/static", express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({
-  extended: true
-}));
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 app.use(compression());
 app.use(mongoSanitize());
 app.use(methodOverride("_method"));
@@ -88,6 +88,7 @@ app.use(helmet());
 app.use(csrfProtection);
 app.use(contentSecurityPolicy());
 app.use(Auth.Session.startTrackUrl());
+app.use(Auth.Session.deserializeUser());
 
 // Setting some things in this middleware.
 app.use((req, res, next) => {
@@ -107,7 +108,7 @@ app.get(["/", "/home"], async (req, res) => {
   const postsMini = await Post.find({}).limit(3).sort("createdAt");
   res.render("index.ejs", {
     postsCarousel,
-    postsMini
+    postsMini,
   });
 });
 app.use("/users", authRoutes);
@@ -119,7 +120,7 @@ app.use("/posts/:id/comments", commentsRoutes);
 app.all("*", (req, res, next) => {
   next({
     status: 404,
-    message: "Content not Found!"
+    message: "Content not Found!",
   });
 });
 
