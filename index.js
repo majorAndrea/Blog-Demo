@@ -47,7 +47,7 @@ const sessionConfig = {
   },
 };
 const helmet = require("helmet");
-const Auth = require("./controllers/auth.js");
+const Auth = require("./services/auth.js");
 const Post = require("./models/posts.js");
 const csrf = require("csurf");
 const csrfProtection = csrf();
@@ -90,13 +90,14 @@ app.use(contentSecurityPolicy());
 app.use(Auth.Session.startTrackUrl());
 app.use(Auth.Session.deserializeUser());
 
-// Setting some things in this middleware.
 app.use((req, res, next) => {
   res.locals.signedUser = Auth.Session.getUserFromSession(req);
   res.locals.urlPath = req.path || "/";
   res.locals.csrfToken = req.csrfToken();
+
   // If there is any data after redirect, this will set that data in the locals object for the views.
   res.locals.tempData = req.session.tempData || null;
+
   // Delete from the session object the temp data used for the redirect with data.
   req.session.tempData && delete req.session.tempData;
   next();
@@ -106,6 +107,7 @@ app.use((req, res, next) => {
 app.get(["/", "/home"], async (req, res) => {
   const postsCarousel = await Post.find({}).limit(3).sort("-createdAt");
   const postsMini = await Post.find({}).limit(3).sort("createdAt");
+
   res.render("index.ejs", {
     postsCarousel,
     postsMini,

@@ -1,4 +1,4 @@
-const Auth = require("./auth.js");
+const Auth = require("../services/auth.js");
 const User = require("../models/users.js");
 const Post = require("../models/posts.js");
 const Comment = require("../models/comments.js");
@@ -34,6 +34,7 @@ module.exports.renderBeginPasswordReset = (req, res) => {
 module.exports.renderPasswordReset = asyncHandler(async (req, res, next) => {
   const { username } = req.params;
   const { token } = req.query;
+
   const userFound = await User.findOne({
     resetPasswordToken: token,
     resetPasswordTokenExpireDate: { $gt: Date.now() },
@@ -67,6 +68,7 @@ module.exports.renderDashboard = asyncHandler(async (req, res) => {
   );
   const userPosts = await Post.getAllPostsOfUser(req.params.username);
   const userComments = await Comment.getAllCommentsOfUser(req.params.username);
+
   res.render("users/dashboard/index.ejs", {
     csrfToken: req.csrfToken(),
     userImage: (userInfo.image && userInfo.image.path) || undefined,
@@ -85,6 +87,7 @@ module.exports.renderProfile = asyncHandler(async (req, res) => {
     { username: req.params.username },
     { username: 1, bio: 1, birthday: 1, image: 1, profileVisits: 1 }
   );
+
   if (currentUser.username !== req.params.username) {
     if (userInfo.profileVisits) {
       userInfo.set("profileVisits", parseInt(userInfo.profileVisits) + 1);
@@ -119,13 +122,15 @@ module.exports.updateUser = asyncHandler(async (req, res) => {
   if (req.file) {
     req.body.user = { image: req.file };
   }
+
   const username = req.params.username;
   await User.findOneAndUpdate(
     { username: username },
     { ...req.body.user },
     { upsert: true }
   );
-  // If the user changes his username, then logout the user.
+
+  // If the user changes its username, then logout the user.
   if (!req.body.user.username) {
     const success = {
       path: `/users/${req.params.username}/dashboard`,

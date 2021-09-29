@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const sendGridTransport = require("nodemailer-sendgrid-transport");
 
-const DEFAULT_EMAIL = "am.blog.demo@gmail.com";
+const DEFAULT_EMAIL = process.env.BLOG_DEMO_EMAIL;
 
 const transporter = nodemailer.createTransport(
   sendGridTransport({

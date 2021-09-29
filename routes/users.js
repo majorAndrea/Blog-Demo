@@ -3,9 +3,9 @@ const router = express.Router();
 const {
   validateUser,
   validateUserUpdate,
-} = require("../utils/val-middleware.js");
+} = require("../middlewares/validation-middlewares.js");
 const users = require("../controllers/users.js");
-const Auth = require("../controllers/auth.js");
+const Auth = require("../services/auth.js");
 const multer = require("multer");
 const { storage } = require("../cloudinary");
 const upload = multer({ storage });

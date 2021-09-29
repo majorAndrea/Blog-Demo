@@ -38,7 +38,7 @@ const helmetMidlleware = () =>
         "'self'",
         "blob:",
         "data:",
-        "https://res.cloudinary.com/dnymebtck/", //CLOUDINARY ACCOUNT.
+        "https://res.cloudinary.com/" + process.env.CLOUDINARY_CLOUD_NAME + "/",
         "https://images.unsplash.com/",
       ],
       fontSrc: ["'self'", ...fontSrcUrls],

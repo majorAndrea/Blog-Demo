@@ -1,4 +1,3 @@
-// I made this a middleware just to organize better the code.
 const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const geocodingClient = mbxGeocoding({
   accessToken: process.env.MAPBOX_PUBLIC_TOKEN,
@@ -13,11 +12,13 @@ const geocode = asyncHandler(async (req, res, next) => {
         limit: 1,
       })
       .send();
+
     if (response.body.features.length) {
       const data = {};
       data.geometry = response.body.features[0].geometry;
       data.placename = req.body.post.location;
       req.body.post.location = data;
+
       next();
     } else {
       const redirectInfo = {
@@ -25,7 +26,6 @@ const geocode = asyncHandler(async (req, res, next) => {
           req.method === "POST" ? "posts/new" : `${req.params.id}/edit`
         }`,
         data: (() => {
-          // I used an immediately invoked function expression because just to omit using the parentheses when accessing "data".
           if (req.method === "POST") {
             // Return the post data only for POST requests.
             return req.body.post;

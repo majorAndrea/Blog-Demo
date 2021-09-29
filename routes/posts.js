@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { validatePost } = require("../utils/val-middleware.js");
-const Auth = require("../controllers/auth.js");
+const { validatePost } = require("../middlewares/validation-middlewares.js");
+const Auth = require("../services/auth.js");
 const posts = require("../controllers/posts.js");
 const multer = require("multer");
 const { storage, fileFilter } = require("../cloudinary");

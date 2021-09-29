@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
-const { validateComment } = require("../utils/val-middleware.js");
+const { validateComment } = require("../middlewares/validation-middlewares.js");
 const comments = require("../controllers/comments.js");
-const Auth = require("../controllers/auth.js");
+const Auth = require("../services/auth.js");
 
 router.post(
   "/",

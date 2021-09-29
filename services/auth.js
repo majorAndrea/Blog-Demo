@@ -7,7 +7,8 @@ const { promisify } = require("util");
 const asyncRandomBytes = promisify(randomBytes);
 const asyncHandler = require("../utils/async-handler.js");
 
-const RESET_PASSWORD_TOKEN_EXPIRATION_MS = 1_800_000;
+const RESET_PASSWORD_TOKEN_EXPIRATION_MS =
+  process.env.RESET_PASSWORD_TOKEN_EXPIRATION_MS;
 
 class Auth {
   constructor() {
@@ -94,17 +95,20 @@ class UserAuth {
     return asyncHandler(async (req, res) => {
       const { email, password } = req.body.user;
       const foundUser = await User.validateCredentials(email, password);
+
       if (foundUser) {
         this.Auth.Session.setLoggedUserIntoSession(req, res, {
           id: foundUser._id,
           username: foundUser.username,
           email: foundUser.email,
         });
+
         const success = {
           path: this.Auth.Session.getTrackUrl(req) || successRedirect || "/",
           message: successMsg || "You are now logged In!",
           redirectMsg: "Click here to redirect you back",
         };
+
         res.location(success.path);
         res.status(200).render("success.ejs", {
           success,
@@ -128,12 +132,15 @@ class UserAuth {
         email,
         password,
       });
+
       await newUser.save();
+
       this.Auth.Session.setLoggedUserIntoSession(req, res, {
         id: newUser._id,
         username: newUser.username,
         email: newUser.email,
       });
+
       const success = {
         path: this.Auth.Session.getTrackUrl(req) || successRedirect || "/",
         message:
@@ -141,6 +148,7 @@ class UserAuth {
           `Welcome ${username}, you are now successfully registered!`,
         redirectMsg: "Click here to redirect you back.",
       };
+
       res.location(success.path);
       res.status(201).render("success.ejs", {
         success,
@@ -160,7 +168,9 @@ class UserAuth {
             }, you are now logged out!`,
           redirectMsg: "Click here to redirect you back.",
         };
+
         this.Auth.Session.deleteUserFromSession(req);
+
         res.location(success.path);
         res.status(200).render("success.ejs", {
           success,
@@ -189,9 +199,11 @@ class UserAuth {
           const resetPswToken = buffer.toString("hex");
           const tokenExpireDateMs =
             Date.now() + RESET_PASSWORD_TOKEN_EXPIRATION_MS;
+
           userFound.resetPasswordToken = resetPswToken;
           userFound.resetPasswordTokenExpireDate = tokenExpireDateMs;
           await userFound.save();
+
           const emailResetPsw = new Email({
             to: emailOfPasswordToReset,
             subject: "Request of password reset - BlogDemo",
@@ -225,7 +237,9 @@ class UserAuth {
         userFound.password = password;
         userFound.resetPasswordToken = "";
         userFound.resetPasswordTokenExpireDate = Date.now(); // To expire reset password token.
+
         await userFound.save();
+
         const success = {
           path: successRedirect || "/",
           message:
@@ -233,6 +247,7 @@ class UserAuth {
             `${userFound.username} you have correctly changed your password. Now you can log in with your new password.`,
           redirectMsg: "Click here to continue.",
         };
+
         res.location(success.path);
         return res.status(200).render("success.ejs", {
           success,
@@ -279,6 +294,7 @@ class Privileges {
   ) {
     return asyncHandler(async (req, res, next) => {
       const { id: userId } = this.Auth.Session.getUserFromSession(req);
+
       switch (sourceToAccess.toLowerCase()) {
         case "post":
         case "posts": {

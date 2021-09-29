@@ -17,21 +17,22 @@ const checkErrors = async (
   if (!anyError) {
     return next();
   } else {
-    if (file) await cloudinary.uploader.destroy(file.filename); // Delete any image uploaded in cloudinary.
-    const errMsg = anyError.details.map((msg) => msg.message).join(", "); // Create string from an array of errors from Joi.
+    if (file) await cloudinary.uploader.destroy(file.filename);
+
+    const errMsg = anyError.details.map((msg) => msg.message).join(", ");
     return next({
       status: status,
       message: errMsg,
       redirectInfo: { path, data },
-    }); // Populate redirectInfo so user will be redirect back with forms populated with values using "data".
+    });
   }
 };
 
 const validatePost = (req, res, next) => {
   const { post } = req.body;
   let { error } = postValidationSchema.validate(post);
-  // If this validate runs, then only check for errors regarding the image (no image or invalid format)
-  // only for new Posts. Check the function fileFilter inside cloudinary folder to understand better this process.
+
+  // Validation for new posts with an invalid image.
   if (!req.file && req.method !== "PUT") {
     // If there is already an error, push this too.
     if (error) {
@@ -58,7 +59,6 @@ const validatePost = (req, res, next) => {
       path: `${req.method === "POST" ? "posts/new" : `${req.params.id}/edit`}`,
       status: 422,
       data: (() => {
-        // Smart use for immediately invoked function expression?
         if (req.method === "POST") {
           // Return the post data only for POST requests.
           return post;
@@ -66,13 +66,15 @@ const validatePost = (req, res, next) => {
         return null;
       })(),
     },
-    req.file // Posts have an image so pass to checkErrors to delete it from cloudinary if any error.
+    // Pass reference of the image to be deleted from cloudinary if the post contains invalid data.
+    req.file
   );
 };
 
 const validateComment = (req, res, next) => {
   const { comment } = req.body;
   const { error } = commentValidationSchema.validate(comment);
+
   checkErrors(error, next, {
     path: `/posts/${req.params.id}`,
     status: 422,
@@ -84,6 +86,7 @@ const validateUser = async (req, res, next) => {
   const { user } = req.body;
   const { error } = userValidationSchema.validate(user);
   const anyDuplicateError = await findDuplicates(user.email, user.username);
+
   checkErrors(error || anyDuplicateError, next, {
     path: "/users/register",
     status: error ? 422 : 409,
@@ -92,13 +95,17 @@ const validateUser = async (req, res, next) => {
 };
 
 const validateUserUpdate = async (req, res, next) => {
-  if (req.file) return next(); // If the user only change the profile image, skip the validation.
+  // Skip validation if user change only the profile image.
+  if (req.file) return next();
+
   const { user } = req.body;
   const { error } = userUpdateValidationSchema.validate(user);
   let anyDuplicateError = undefined;
+
+  // Only check for username duplicates if the user tries to change it from the dashboard.
   if (user.username)
-    // Only check for username duplicates if the user try to change it from the dashboard.
     anyDuplicateError = await findDuplicates(undefined, user.username);
+
   checkErrors(error || anyDuplicateError, next, {
     path: `/users/${req.params.username}/dashboard`,
     status: error ? 422 : 409,
@@ -110,8 +117,8 @@ const validateUserUpdate = async (req, res, next) => {
 const findDuplicates = async (email = undefined, username = undefined) => {
   if (email) {
     const duplicateEmail = await User.findDuplicates("email", email);
+
     if (duplicateEmail) {
-      // Adapt this return Object to be like Joi return error Object to be used in CheckErrors.
       return {
         details: [
           {
@@ -123,8 +130,8 @@ const findDuplicates = async (email = undefined, username = undefined) => {
   }
   if (username) {
     const duplicateUsername = await User.findDuplicates("username", username);
+
     if (duplicateUsername) {
-      // Adapt this return Object to be like Joi return error Object to be used in CheckErrors.
       return {
         details: [
           {
