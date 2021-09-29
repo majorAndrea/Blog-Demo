@@ -1,0 +1,17 @@
+{
+  "attr-value-not-empty": false,
+  "attr-lowercase": true,
+  "attr-unsafe-chars": true,
+  "attr-value-double-quotes": true,
+  "alt-require": true,
+  "input-requires-label": true,
+  "tags-check": true,
+  "tag-pair": true,
+  "tagname-lowercase": true,
+  "id-class-value": true,
+  "id-unique": true,
+  "spec-char-escape": true,
+  "attr-no-unnecessary-whitespace": true,
+  "title-require": true,
+  "attr-no-duplication": true
+}

@@ -21,7 +21,7 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <!-- FONT AWESOME -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-    
+
     <% if (urlPath==="/" ) { %>
         <link rel="stylesheet" href="/static/styles/index.css">
     <% } %>
@@ -53,7 +53,7 @@
     <% if (urlPath === "/" ) { %>
         <script defer src="/static/scripts/index.js"></script>
     <% } %>
-    
+
     <% if (urlPath && urlPath.includes("posts") || urlPath.includes("users")) { %>
         <script defer src="/static/scripts/validation.js"></script>
         <% if (urlPath && urlPath.includes("new") || urlPath.includes("edit")) { %>
@@ -63,9 +63,9 @@
     <% } %>
 
 
-    <% if (urlPath && urlPath.includes("password_reset")) { %> 
+    <% if (urlPath && urlPath.includes("password_reset")) { %>
         <script defer src="/static/scripts/validate-equality-psw.js"></script>
-    <% } %> 
+    <% } %>
 </body>
 
 </html>
