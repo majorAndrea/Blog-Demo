@@ -23,7 +23,7 @@ const connectSrcUrls = [
   "https://b.tiles.mapbox.com/",
   "https://events.mapbox.com/",
 ];
-const fontSrcUrls = [];
+const fontSrcUrls = ["https://use.fontawesome.com/"];
 
 const helmetMidlleware = () =>
   helmet.contentSecurityPolicy({
