@@ -24,7 +24,7 @@ const MongoStore = require("connect-mongo")(session);
 const mongoStore = new MongoStore({
   url: process.env.DB_CONNECTION,
   secret,
-  touchAfter: 24 * 60 * 60
+  touchAfter: 24 * 60 * 60,
 });
 
 const sessionConfig = {
@@ -43,8 +43,8 @@ const sessionConfig = {
       return true;
     })(),
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // Milliseconds, seconds, minutes, hours, daysInWeek.
-    maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7
-  }
+    maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7,
+  },
 };
 const helmet = require("helmet");
 const Auth = require("./services/auth.js");
@@ -59,12 +59,12 @@ mongoose
   .connect(DB_CONNECTION, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: false
+    useFindAndModify: false,
   })
   .then(() => {
     console.log("=> MONGODB connection OPEN!");
   })
-  .catch(e => {
+  .catch((e) => {
     console.log("=> MONGODB connection FAILED!");
     console.log(e);
   });
@@ -77,7 +77,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use(
   express.urlencoded({
-    extended: true
+    extended: true,
   })
 );
 app.use(compression());
@@ -105,41 +105,40 @@ app.use((req, res, next) => {
 
 // ROUTES ---------------------------------->
 app.get(["/", "/home"], async (req, res) => {
-  const postsCarousel = await Post.find({})
-    .limit(3)
-    .sort("-createdAt");
-  const postsMini = await Post.find({})
-    .limit(3)
-    .sort("createdAt");
+  const postsCarousel = await Post.find({}).limit(3).sort("-createdAt");
+  const postsMini = await Post.find({}).limit(3).sort("createdAt");
   const techPost = await Post.findOne({
     categories: {
       $elemMatch: {
-        $eq: "tech"
-      }
-    }
+        $eq: "tech",
+      },
+    },
   }).sort("createdAt");
 
   const sportPost = await Post.findOne({
     categories: {
       $elemMatch: {
-        $eq: "sport"
-      }
-    }
+        $eq: "sport",
+      },
+    },
   }).sort("createdAt");
 
   const politicPost = await Post.findOne({
     categories: {
       $elemMatch: {
-        $eq: "politics"
-      }
-    }
+        $eq: "politics",
+      },
+    },
   }).sort("createdAt");
 
   res.render("index.ejs", {
     postsCarousel,
     postsMini,
-    latestPosts: [politicPost, techPost, sportPost]
+    latestPosts: [politicPost, techPost, sportPost],
   });
+});
+app.get("/contacts", (req, res) => {
+  res.render("contact.ejs");
 });
 app.use("/users", authRoutes);
 app.use("/posts", postsRoutes);
@@ -150,7 +149,7 @@ app.use("/posts/:id/comments", commentsRoutes);
 app.all("*", (req, res, next) => {
   next({
     status: 404,
-    message: "Content not Found!"
+    message: "Content not Found!",
   });
 });
 

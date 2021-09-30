@@ -1,11 +1,11 @@
 <% layout("/layouts/boilerplate.ejs") %>
-    <div class="d-flex flex-column flex-lg-row justify-content-between">
+    <div class="d-flex flex-column flex-lg-row justify-content-evenly">
         <!-- NEW POST ARTICLE -->
         <article class="card shadow bg-light shadow border rounded-3 order-1 order-lg-2">
-            <h1 class="text-center pb-2">Add New Post</h1>
             <form action="/posts?_csrf=<%= csrfToken %>" method="POST"
-                class="post-form ps-3 pe-3 pb-3 ps-sm-5 pe-sm-5 pb-sm-5" enctype="multipart/form-data"
+                class="post-form py-3 px-4 py-md-4 px-md-5" enctype="multipart/form-data"
                 autocomplete="off">
+                <h1 class="text-center pb-2">Add New Post</h1>
                 <!-- TITLE INPUT -->
                 <section class="mb-3">
                     <label for="title" class="form-label">Title:</label>
@@ -29,19 +29,21 @@
                 </section>
                 <!-- CATEGORIES CHECKBOXES -->
                 <section>
-                    <p class="m-0 p-0 text-danger text-center" id="category-msg">You must select at least one
-                        category!</p>
-                    <p class="form-label">Categories:</p>
-                    <% for (category of postCategories) { %>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" value="<%= category %>" id="<%= category %>"
-                                name="post[categories]" <%=tempData?.categories &&
-                                tempData.categories.includes(category) ? "checked" : null %>>
-                            <label class="form-check-label" for="<%= category %>">
-                                <%= category.replace(category[0], category[0].toUpperCase()); %>
-                            </label>
-                        </div>
-                        <% } %>
+                  <p class="m-0 p-0 mb-2 text-danger text-center" id="category-msg">You must select at least one
+                      category!</p>
+                  <p class="form-label">Categories:</p>
+                  <div class="">
+                  <% for (category of postCategories) { %>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" value="<%= category %>" id="<%= category %>"
+                            name="post[categories]" <%=tempData?.categories &&
+                            tempData.categories.includes(category) ? "checked" : null %>>
+                        <label class="form-check-label" for="<%= category %>">
+                            <%= category.replace(category[0], category[0].toUpperCase()); %>
+                        </label>
+                    </div>
+                  <% } %>
+                  </div>
                 </section>
                 <!-- LOCATION FIELD & Hidden by default and not required. -->
                 <section class="location-field mt-3 <%= tempData?.location ? null : " d-none" %>

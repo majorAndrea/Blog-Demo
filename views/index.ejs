@@ -14,11 +14,11 @@
             <div class="carousel-inner">
                     <!-- Carousel articles -->
                     <% for (let i = 0; i < postsCarousel.length; i++) { %>
-                        <article class="carousel-item <%= i === 0 ? " active" : "" %>" data-postUrl=<%= postsCarousel[i]._id %> >
+                        <article class="carousel-item <%= i === 0 ? " active" : "" %>" data-postUrl=<%= postsCarousel[i]._id %>>
 
                                 <img src="<%= postsCarousel[i].resizeImage(1280, 780) %>"
                                     class="d-block border rounded w-100 h-100 carousel-img"
-                                    alt="Image of the slide-show post">
+                                    alt="Image of the slide-show post" />
 
                                 <div class="carousel-caption">
                                     <h4>
@@ -82,7 +82,7 @@
     <% } %>
     </section>
 
-    <hr class="my-5"/>
+    <hr />
 
     <section class="mt-5">
       <% for (post of latestPosts) { %>
@@ -90,10 +90,14 @@
           <h2 class="tech-heading mb-4"><span>Latest from <%= post.categories[0].replace(post.categories[0][0], post.categories[0][0].toUpperCase()) %></span></h2>
           <div class="d-flex flex-column flex-lg-row justify-content-evenly mt-3">
             <div class="col-lg-4 d-flex flex-column order-1 order-lg-0">
-              <h4><%= post.title %></h4>
+              <h4 class="mb-3"><%= post.title %></h4>
               <p><%= post.text.substring(0, 300) %>... <a href="/posts/<%= post._id %>" class="link-success" tabindex="0">Read More</a></p>
-
-              <aside class="align-self-end">
+							<small class="text-muted mt-2 mb-3 mb-md-0">Published on
+								<strong class="text-dark">
+									<%= post.retriveDate() %>
+								</strong>
+							</small>
+              <aside class="align-self-end mt-auto">
                 <!-- Twitter -->
                 <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button" title="Share on Twitter"
                   ><i class="fab fa-twitter"></i
@@ -104,25 +108,13 @@
                   ><i class="fab fa-instagram"></i
                 ></a>
               </aside>
-
             </div>
-            <div class="col-lg-7 order-0 order-lg-1 mb-3 mb-lg-0">
+            <div class="col-lg-7 mb-3 mb-lg-0 order-0 order-lg-1">
               <img src="<%= post.image.path %>" class=" h-100 w-100 post-latest-img"
                   alt="Image of the small Post">
             </div>
+            
           </div>
         </article>
       <% } %>
     </section>
-
-    <aside class="d-block d-lg-none mt-5 col-md-6 offset-md-3 rounded">
-        <form class="card p-4 shadow">
-            <h2>Subscribe to the newsletter</h2>
-            <div class="mb-3 mt-1">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control bg-light" id="exampleInputEmail2" aria-describedby="emailHelp">
-                <div id="emailHelp2" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <button type="submit" class="btn btn-success">Submit</button>
-        </form>
-    </aside>

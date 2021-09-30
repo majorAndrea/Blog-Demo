@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark flex-shrink-0 py-3 text-warning sticky-top">
     <div class="container-lg container-fluid">
-        <a class="navbar-brand text-warning" href="/">Blog Demo</a>
+        <a class="navbar-brand text-warning" href="/" title="Home Page">Blog Demo</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,31 +8,31 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
+                    <a class="nav-link" href="/" title="Go to the Home Page">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/posts">All Posts</a>
+                    <a class="nav-link" href="/posts" title="Go to all Posts" >All Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/posts?category=tech">Tech</a>
+                    <a class="nav-link" href="/posts?category=tech" title="Go to tech posts">Tech</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/posts?category=science">Science</a>
+                    <a class="nav-link" href="/posts?category=science" title="Go to science posts">Science</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/posts?category=politics">Politics</a>
+                    <a class="nav-link" href="/posts?category=politics" title="Go to politics posts">Politics</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/posts?category=sport">Sport</a>
+                    <a class="nav-link" href="/posts?category=sport" title="Go to sport posts">Sport</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/posts?category=places">Places</a>
+                    <a class="nav-link" href="/posts?category=places" title="Go to places posts">Places</a>
                 </li>
             </ul>
             <% if (!signedUser) { %>
                 <div class="d-flex justify-content-between d-lg-inline-block">
-                    <a href="/users/login" class="btn btn-sm btn-primary me-0 me-md-2">Login</a>
-                    <a href="/users/register" class="btn btn-sm btn-success">Register</a>
+                    <a href="/users/login" class="btn btn-sm btn-primary me-0 me-md-2" title="Go to the login page">Login</a>
+                    <a href="/users/register" class="btn btn-sm btn-success" title="Go to the registration page">Register</a>
                 </div>
                 <% } else { %>
                     <div class="d-flex justify-content-between d-lg-inline-block">
@@ -45,12 +45,12 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end mt-1 mt-lg-3"
                                 aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="/posts/new">New Post</a></li>
+                                <li><a class="dropdown-item" href="/posts/new" title="Make a new Post">New Post</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li><a class="dropdown-item"
-                                        href="/users/<%= signedUser.username %>/dashboard">Profile</a></li>
+                                        href="/users/<%= signedUser.username %>/dashboard" title="Go to your dashboard">Profile</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>

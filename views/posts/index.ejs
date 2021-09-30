@@ -16,14 +16,15 @@
 							</p>
 						</div>
 						<div class="d-flex justify-content-between mt-auto">
-							<a href="/posts/<%= post._id %>" class="card-link btn btn-sm btn-outline-primary">Read
+							<a href="/posts/<%= post._id %>" title="Read More" class="card-link btn btn-sm btn-outline-primary">Read
 								More</a>
-							<p class="card-text align-self-end">
+							<span class="card-text align-self-end">
 								<small class="text-muted">Created on
 									<strong class="text-primary">
 										<%= post.retriveDate() %>
-									</strong></small>
-							</p>
+									</strong>
+								</small>
+							</span>
 						</div>
 					</div>
 				</section>
@@ -32,19 +33,26 @@
 		<% } %>
 			<nav aria-label="Posts page navigation" class="d-flex justify-content-center mt-5">
 				<ul class="pagination">
-					<li class="page-item <%= pagination.hasPrev ? null : " disabled" %>"><a class="page-link" href="<%=category ?
-							`/posts?category=${category}&page=${pagination.currentPage -1}` : `/posts?page=${pagination.currentPage -1}`
-							%>">Prev</a></li>
+					<li class="page-item <%= pagination.hasPrev ? null : " disabled" %>">
+						<a class="page-link" title="Previous" aria-label="Previous" href="<%=category ?
+								`/posts?category=${category}&page=${pagination.currentPage -1}` : `/posts?page=${pagination.currentPage -1}`
+								%>">&#8592;
+						</a>
+				</li>
 					<% for (let i=1; i <=pagination.totalPages; i++) { %>
-						<li class="page-item <%= pagination.currentPage === i ? 'active' : null %>"><a class="page-link"
-								href=<%=category ? `/posts?category=${category}&page=${i}` : `/posts?page=${i}` %>>
+						<li class="page-item <%= pagination.currentPage === i ? 'active' : null %>">
+							<a class="page-link"
+								href=<%=category ? `/posts?category=${category}&page=${i}` : `/posts?page=${i}` %> aria-label="<%= `Page ${i}` %> ">
 								<%= i %>
-							</a></li>
-
-						<% } %>
-							<li class="page-item <%= pagination.hasNext ? null : " disabled" %>"><a class="page-link" href="
-									<%=category ?
-								`/posts?category=${category}&page=${pagination.currentPage +1}` : `/posts?page=${pagination.currentPage +1}`
-								%>">Next</a></li>
+							</a>
+						</li>
+					<% } %>
+						<li class="page-item <%= pagination.hasNext ? null : " disabled" %>">
+							<a class="page-link" title="Next" aria-label="Next" href="
+								<%=category ?
+							`/posts?category=${category}&page=${pagination.currentPage +1}` : `/posts?page=${pagination.currentPage +1}`
+							%>">&#8594;
+							</a>
+						</li>
 				</ul>
 			</nav>

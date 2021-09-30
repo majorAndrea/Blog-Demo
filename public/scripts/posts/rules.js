@@ -8,6 +8,7 @@
   const catBadge = document.querySelector(".cat-badge");
   const locationCatBadge = document.querySelector(".location-cat-badge");
   const categoryMsg = document.querySelector("#category-msg");
+
   // Show and hide rule field related to the image if the image input
   // is not present; like when editing one Post.
   const imgInput = document.querySelector("input[type='file']");
@@ -17,6 +18,7 @@
   // Change rule max and min values for title and description dynamically.
   const MAX_CHARS_TITLE = postForm.elements[0].attributes.maxlength.value;
   const MIN_CHARS_TITLE = postForm.elements[0].attributes.minlength.value;
+
   // When editing one Post vs when creating a new one, there is a difference on
   // the postForm elements index, because the image input is not available when editing
   // the Post, so switch to querySelector.
@@ -45,6 +47,7 @@
       badgeRef.textContent = "OK";
       badgeRef.classList.remove("bg-danger");
       badgeRef.classList.add("bg-success");
+
       // For checkbox show custom <p> message.
       if (eventRef.target.type === "checkbox") {
         categoryMsg.classList.add("d-none");
@@ -107,6 +110,7 @@
         case "image":
           // The value of the image is the local path of the user computer.
           checkValidityInput(event, imgBadge, 1, 999);
+          break;
         case "location":
           checkValidityInput(
             event,
@@ -114,14 +118,17 @@
             MIN_CHARS_LOCATION,
             MAX_CHARS_LOCATION
           );
+          break;
         default:
           return;
       }
     } else if (event.target.type === "checkbox") {
       // Create an array from HTML Form Collections.
       const checkboxes = Array.from(postForm.elements)
+
         // Map each checkboxes to false or true if checked.
         .map((isCheckbox) => isCheckbox.checked);
+        
       // If some entry in the array is true, then there are at least
       // one checkbox checked, so change the badge state accordingly.
       if (checkboxes.some((areChecked) => areChecked === true)) {

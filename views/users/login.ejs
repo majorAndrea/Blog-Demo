@@ -2,11 +2,11 @@
 <%- include("../layouts/partials/error-flash.ejs") %>
 <div class="row">
   <div class="card rounded bg-light shadow col-10 offset-1 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4">
-    <form action="/users/login" method="POST" class="validation px-4 py-3 pt-2" novalidate>
+    <form action="/users/login" method="POST" class="validation pb-4 pt-3 px-3" novalidate>
       <h1 class="text-center mb-4">Login</h1>
       <section class="mb-3">
         <div class="form-floating">
-          <input type="email" class="form-control" id="email" name="user[email]" autocomplete="off" value="<%= tempData && tempData.email ? tempData.email : null %>" required>
+          <input type="email" class="form-control" id="email" name="user[email]" autocomplete="off" value="<%= tempData && tempData.email ? tempData.email : null %>" required autofocus>
           <label for="email">Email address</label>
           <div class="valid-feedback">
             OK!
@@ -21,7 +21,7 @@
       <section class="mb-4">
         <div class="form-floating">
           <input type="password" class="form-control" id="password" name="user[password]" required>
-          <label for="email">Password</label>
+          <label for="password">Password</label>
           <div class="valid-feedback">
             OK!
           </div>
@@ -43,7 +43,7 @@
           <button type="submit" class="btn btn-lg btn-primary mt-3">Login</button>
         </div>
       </section>
-      <a href="/users/begin_password_reset" class="mt-4 d-block text-muted">Forgot your password?</a>
+      <a href="/users/begin_password_reset" class="mt-4 d-block text-muted" title="Go to forgot password page">Forgot your password?</a>
     </form>
   </div>
 </div>

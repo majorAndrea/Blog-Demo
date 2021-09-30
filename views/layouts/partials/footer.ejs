@@ -1,37 +1,40 @@
-<footer class="bg-dark text-center text-white mt-auto">
+<footer class="bg-dark text-center text-white mt-4">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <div class="navbar-nav w-100 flex-row justify-content-between justify-content-lg-end">
-          <a class="nav-link" href="/">Home</a>
-          <a class="nav-link" href="#">All Posts</a>
-          <a class="nav-link" href="#">Account</a>
-          <a class="nav-link" href="#">Contact Us</a>
-          <a class="nav-link" href="#">Help</a>
+        <div class="navbar-nav w-100 flex-sm-row justify-content-sm-between justify-content-lg-end">
+          <a class="nav-link" href="/" title="Go to the Home Page">Home</a>
+          <a class="nav-link" href="/posts" title="See all Posts">All Posts</a>
+          <% if (signedUser) { %>
+              <a class="nav-link" title="Go to your account dashboard" href="/users/<%= signedUser.username %>/dashboard">Account</a>
+          <% } else { %>
+            <a class="nav-link" title="Go to the login page" href="/users/login">Login</a>
+            <a class="nav-link" title="Go to the registration page" href="/users/register">Registration</a>
+          <% } %>
+          <a class="nav-link" title="Go to contacts page" href="/contacts">Contact Us</a>
         </div>
     </div>
   </nav>
-    <div class="container p-4">
+    <div class="container p-4 pt-2">
       <!-- Section: Social media -->
       <section class="mb-4">
 
         <!-- Twitter -->
-        <a class="btn btn-outline-light btn-floating m-1" href="https://twitter.com/majorandry" target="_blank" role="button"
+        <a class="btn btn-outline-light btn-floating m-1" title="Go to Twitter page" href="https://twitter.com/majorandry" target="_blank" role="button"
           ><i class="fab fa-twitter"></i
         ></a>
 
         <!-- Instagram -->
-        <a class="btn btn-outline-light btn-floating m-1" href="https://www.instagram.com/majorandry/" target="
-        " role="button"
+        <a class="btn btn-outline-light btn-floating m-1" title="Go to Instagram page" href="https://www.instagram.com/majorandry/" target="_blank" role="button"
           ><i class="fab fa-instagram"></i
         ></a>
 
         <!-- Linkedin -->
-        <a class="btn btn-outline-light btn-floating m-1" href="https://www.linkedin.com/in/andrea-marloni/" target="_blank" role="button"
+        <a class="btn btn-outline-light btn-floating m-1" title="Go to LinkedIn page" href="https://www.linkedin.com/in/andrea-marloni/" target="_blank" role="button"
           ><i class="fab fa-linkedin-in"></i
         ></a>
 
         <!-- Github -->
-        <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/majorAndrea/Blog-Demo" target="_blank" role="button"
+        <a class="btn btn-outline-light btn-floating m-1" title="Go to GitHub page" href="https://github.com/majorAndrea/Blog-Demo" target="_blank" role="button"
           ><i class="fab fa-github"></i
         ></a>
       </section>

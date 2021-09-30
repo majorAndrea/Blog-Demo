@@ -8,7 +8,6 @@ const postCategories = [
   "tech",
   "politics",
   "places",
-  "cinema",
 ];
 
 const postSchema = new Schema(
@@ -106,7 +105,7 @@ postSchema.statics.getAllPostsOfUser = async function (username) {
 // When deleting one Post also delete all the comments for that post.
 postSchema.post("findOneAndDelete", async function (doc) {
   if (doc.comments) {
-    for (comment of doc.comments) {
+    for (let comment of doc.comments) {
       await Comment.findByIdAndDelete(comment._id);
     }
   }

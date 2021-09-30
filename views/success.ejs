@@ -4,7 +4,7 @@
         <div class="alert alert-success text-center" role="alert">
             <h4 class="alert-heading"><%= success.message %></h4>
             <% if (success.path) { %> 
-                <a href="<%= success.path %>" class="link-dark"><%= success.redirectMsg %></a>
+                <a href="<%= success.path %>" title="Proceed" class="link-dark"><%= success.redirectMsg %></a>
             <% } %> 
             <hr>
             <p class="mb-0">Click the link above to proceed. Or you will be automatically redirected within three seconds.</p>  
