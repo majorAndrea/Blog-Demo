@@ -27,9 +27,6 @@ Tech used:
 - Bcrypt.js
 - Others...
 
-SIDE-NOTE:
-I have created my own Auth System... I know is bad to create my own Authentication and Authorization system from a security standpoint, but this is not a production project and I do that just for fun (like the entire project anyway).
-
 LIVE VERSION: https://am-blog-demo.herokuapp.com/
 
 (It may take a while to load because the project is hosted on a free plan)
