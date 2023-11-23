@@ -27,7 +27,7 @@ Tech used:
 - Bcrypt.js
 - Others...
 
-LIVE VERSION: https://am-blog-demo.herokuapp.com/
+LIVE VERSION: https://blog-demo-1t68.onrender.com
 
 (It may take a while to load because the project is hosted on a free plan)
 
